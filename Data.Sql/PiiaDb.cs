@@ -6,11 +6,14 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.Sql.Models;
 
 namespace Data.Sql
 {
     public class PiiaDb : DbContext
     {
+        public DbSet<User> Users { get; set; }
+
         static PiiaDb()
         {
             Database.SetInitializer<PiiaDb>(null);

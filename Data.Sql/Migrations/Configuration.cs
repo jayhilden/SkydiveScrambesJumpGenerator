@@ -9,7 +9,7 @@ namespace Data.Sql.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(Data.Sql.PiiaDb context)
