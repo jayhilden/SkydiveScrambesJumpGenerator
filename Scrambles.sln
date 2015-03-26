@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scrambles", "Scrambles\Scrambles.csproj", "{70D6C650-EFAC-4C8B-A5B0-9EA87B96F141}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scrambles.Tests", "..\..\Users\jhilden\Documents\Visual Studio 2013\Projects\Scrambles\Scrambles.Tests\Scrambles.Tests.csproj", "{95D2DF85-5AC5-459F-A61D-EB06DCA4C616}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{015A503F-A156-4909-8C25-8CF0DDA7AF92}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\AzureWebsitePublishModule.psm1 = PublishScripts\AzureWebsitePublishModule.psm1
+		PublishScripts\Publish-WebApplicationWebsite.ps1 = PublishScripts\Publish-WebApplicationWebsite.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{C2DD2D99-9E0E-4FD7-A7A4-6C38D2279ADC}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Configurations\Scrambles-WAWS-dev.json = PublishScripts\Configurations\Scrambles-WAWS-dev.json
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70D6C650-EFAC-4C8B-A5B0-9EA87B96F141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70D6C650-EFAC-4C8B-A5B0-9EA87B96F141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70D6C650-EFAC-4C8B-A5B0-9EA87B96F141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70D6C650-EFAC-4C8B-A5B0-9EA87B96F141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95D2DF85-5AC5-459F-A61D-EB06DCA4C616}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95D2DF85-5AC5-459F-A61D-EB06DCA4C616}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95D2DF85-5AC5-459F-A61D-EB06DCA4C616}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95D2DF85-5AC5-459F-A61D-EB06DCA4C616}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C2DD2D99-9E0E-4FD7-A7A4-6C38D2279ADC} = {015A503F-A156-4909-8C25-8CF0DDA7AF92}
+	EndGlobalSection
+EndGlobal
