@@ -12,11 +12,14 @@ namespace Data.Sql.Migrations
                 c => new
                     {
                         UserID = c.Int(nullable: false, identity: true),
-                        FirstName = c.String(),
-                        LastName = c.String(),
+                        FirstName = c.String(nullable: false),
+                        LastName = c.String(nullable: false),
+                        NumberOfJumps = c.Int(nullable: false),
                         Organizer = c.Boolean(nullable: false),
                         Paid = c.Boolean(nullable: false),
                         Comment = c.String(),
+                        RandomizedUpDown = c.Int(),
+                        RandomizedLetter = c.String(maxLength: 1),
                     })
                 .PrimaryKey(t => t.UserID);
             
