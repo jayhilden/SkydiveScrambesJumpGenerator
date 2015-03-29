@@ -13,10 +13,10 @@ namespace Data.Sql.Models
         DownJumper = 2
     }
 
-    public class User
+    public class Jumper
     {
         [Key]
-        public int UserID { get; set; }
+        public int JumperID { get; set; }
 
         [Required]
         public string FirstName { get; set; }

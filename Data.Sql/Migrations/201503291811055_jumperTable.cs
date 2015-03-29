@@ -3,15 +3,15 @@ namespace Data.Sql.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class userTable : DbMigration
+    public partial class jumperTable : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.User",
+                "dbo.Jumper",
                 c => new
                     {
-                        UserID = c.Int(nullable: false, identity: true),
+                        JumperID = c.Int(nullable: false, identity: true),
                         FirstName = c.String(nullable: false),
                         LastName = c.String(nullable: false),
                         NumberOfJumps = c.Int(nullable: false),
@@ -21,13 +21,13 @@ namespace Data.Sql.Migrations
                         RandomizedUpDown = c.Int(),
                         RandomizedLetter = c.String(maxLength: 1),
                     })
-                .PrimaryKey(t => t.UserID);
+                .PrimaryKey(t => t.JumperID);
             
         }
         
         public override void Down()
         {
-            DropTable("dbo.User");
+            DropTable("dbo.Jumper");
         }
     }
 }

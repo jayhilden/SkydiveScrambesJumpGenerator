@@ -7,13 +7,13 @@ namespace Data.Sql.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class userTable : IMigrationMetadata
+    public sealed partial class jumperTable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(userTable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(jumperTable));
         
         string IMigrationMetadata.Id
         {
-            get { return "201503262252466_userTable"; }
+            get { return "201503291811055_jumperTable"; }
         }
         
         string IMigrationMetadata.Source

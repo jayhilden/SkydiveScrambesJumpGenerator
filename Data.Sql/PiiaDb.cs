@@ -12,7 +12,7 @@ namespace Data.Sql
 {
     public class PiiaDb : DbContext
     {
-        public DbSet<User> Users { get; set; }
+        public DbSet<Jumper> Users { get; set; }
 
         static PiiaDb()
         {
