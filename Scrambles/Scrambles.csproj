@@ -161,7 +161,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Jumpers\Create.cshtml" />
     <Content Include="Views\Jumpers\Delete.cshtml" />
-    <Content Include="Views\Jumpers\Details.cshtml" />
     <Content Include="Views\Jumpers\Edit.cshtml" />
     <Content Include="Views\Jumpers\Index.cshtml" />
   </ItemGroup>

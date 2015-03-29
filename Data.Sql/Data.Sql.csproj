@@ -50,6 +50,10 @@
     <Compile Include="Migrations\201503291811055_jumperTable.Designer.cs">
       <DependentUpon>201503291811055_jumperTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503291851259_JumpGroupFlag.cs" />
+    <Compile Include="Migrations\201503291851259_JumpGroupFlag.Designer.cs">
+      <DependentUpon>201503291851259_JumpGroupFlag.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Jumper.cs" />
     <Compile Include="PiiaDb.cs" />
@@ -62,6 +66,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201503291811055_jumperTable.resx">
       <DependentUpon>201503291811055_jumperTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503291851259_JumpGroupFlag.resx">
+      <DependentUpon>201503291851259_JumpGroupFlag.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -16,6 +16,12 @@ namespace Data.Sql.Models
         DownJumper = 2
     }
 
+    public enum JumpGroupFlag
+    {
+        Left = 1,
+        Right = 2
+    }
+
     public class Jumper
     {
         [Key]
@@ -42,6 +48,9 @@ namespace Data.Sql.Models
 
         [DisplayName("Randomized into Up/Down jumper group")]
         public UpDownFlag? RandomizedUpDown { get; set; }
+
+        [DisplayName("Jump Group")]
+        public JumpGroupFlag? JumpGroup { get; set; }
 
         [DisplayName("Randomized Letter assigned")]
         [MaxLength(1)]

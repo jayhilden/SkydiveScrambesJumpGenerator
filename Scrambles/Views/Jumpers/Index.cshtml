@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Data.Sql.Models.Jumper>
+﻿@using Data.Sql.Models
+@model IEnumerable<Data.Sql.Models.Jumper>
 
 @{
     ViewBag.Title = "Jumper List";
@@ -37,6 +38,9 @@
             @Html.DisplayNameFor(model => model.RandomizedUpDown)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.JumpGroup)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.RandomizedLetter)
         </th>
         <th></th>
@@ -63,14 +67,19 @@
             @Html.DisplayFor(modelItem => item.Comment)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.RandomizedUpDown)
+            @{
+                var displayText = item.RandomizedUpDown == UpDownFlag.UpJumper ? "Up" : "Down";
+            }
+            @displayText
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JumpGroup)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RandomizedLetter)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.JumperID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.JumperID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.JumperID })
         </td>
     </tr>
