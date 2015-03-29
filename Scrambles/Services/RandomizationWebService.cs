@@ -18,13 +18,30 @@ namespace Scrambles.Services
 
         public void Randomize()
         {
+            AssignUpDown();
+            AssignGroup();
+        }
+
+        private void AssignUpDown()
+        {
             var cnt = _db.Jumpers.Count();
-            var upJumperCount = Math.Ceiling(cnt/(decimal)2);
+            var upJumperCount = Math.Ceiling(cnt / (decimal)2);
             var i = 0;
             foreach (var jumper in _db.Jumpers.OrderByDescending(x => x.NumberOfJumps))
             {
                 var upDown = (++i <= upJumperCount) ? UpDownFlag.UpJumper : UpDownFlag.DownJumper;
                 jumper.RandomizedUpDown = upDown;
+            }
+            _db.SaveChanges();
+        }
+
+        private void AssignGroup()
+        {
+            var i = 0;
+            foreach (var jumper in _db.Jumpers.OrderByDescending(x => x.NumberOfJumps))
+            {
+                var leftRight = (++i % 2 == 0) ? JumpGroupFlag.Left : JumpGroupFlag.Right;
+                jumper.JumpGroup = leftRight;
             }
             _db.SaveChanges();
         }

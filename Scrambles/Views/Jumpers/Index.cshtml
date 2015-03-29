@@ -68,7 +68,11 @@
         </td>
         <td>
             @{
-                var displayText = item.RandomizedUpDown == UpDownFlag.UpJumper ? "Up" : "Down";
+                string displayText = null;
+                if (item.RandomizedUpDown != null)
+                {
+                    displayText = item.RandomizedUpDown == UpDownFlag.UpJumper ? "Up" : "Down";
+                }
             }
             @displayText
         </td>
@@ -78,7 +82,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.RandomizedLetter)
         </td>
-        <td>
+        <td style="white-space: nowrap;">
             @Html.ActionLink("Edit", "Edit", new { id=item.JumperID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.JumperID })
         </td>
