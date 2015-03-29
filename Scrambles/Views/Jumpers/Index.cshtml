@@ -14,79 +14,96 @@
     @Html.ActionLink("Randomize Jumpers!", "Randomize")
 
 </div>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NumberOfJumps)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Organizer)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Paid)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Comment)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RandomizedUpDown)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.JumpGroup)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RandomizedLetter)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NumberOfJumps)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Organizer)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Paid)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Comment)
-        </td>
-        <td>
-            @{
-                string displayText = null;
-                if (item.RandomizedUpDown != null)
-                {
-                    displayText = item.RandomizedUpDown == UpDownFlag.UpJumper ? "Up" : "Down";
-                }
+<table class="table" id="table1" data-order='[[ 2, "desc" ]]'>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfJumps)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Organizer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Paid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RandomizedUpDown)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JumpGroup)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RandomizedLetter)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfJumps)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Organizer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Paid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td>
+                    @{
+            string displayText = null;
+            if (item.RandomizedUpDown != null)
+            {
+                displayText = item.RandomizedUpDown == UpDownFlag.UpJumper ? "Up" : "Down";
             }
-            @displayText
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.JumpGroup)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RandomizedLetter)
-        </td>
-        <td style="white-space: nowrap;">
-            @Html.ActionLink("Edit", "Edit", new { id=item.JumperID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.JumperID })
-        </td>
-    </tr>
-}
-
+                    }
+                    @displayText
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JumpGroup)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RandomizedLetter)
+                </td>
+                <td style="white-space: nowrap;">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.JumperID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.JumperID })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#table1').DataTable({
+                paging: false,
+                searching: false,
+            });
+        });
+    </script>
+}
