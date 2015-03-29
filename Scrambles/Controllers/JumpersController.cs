@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Data.Sql;
 using Data.Sql.Models;
+using Scrambles.Services;
 
 namespace Scrambles.Controllers
 {
@@ -18,7 +19,7 @@ namespace Scrambles.Controllers
         // GET: Jumpers
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            return View(db.Jumpers.ToList());
         }
 
         // GET: Jumpers/Details/5
@@ -28,7 +29,7 @@ namespace Scrambles.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Jumper jumper = db.Users.Find(id);
+            Jumper jumper = db.Jumpers.Find(id);
             if (jumper == null)
             {
                 return HttpNotFound();
@@ -51,7 +52,7 @@ namespace Scrambles.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(jumper);
+                db.Jumpers.Add(jumper);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -66,7 +67,7 @@ namespace Scrambles.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Jumper jumper = db.Users.Find(id);
+            Jumper jumper = db.Jumpers.Find(id);
             if (jumper == null)
             {
                 return HttpNotFound();
@@ -97,7 +98,7 @@ namespace Scrambles.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Jumper jumper = db.Users.Find(id);
+            Jumper jumper = db.Jumpers.Find(id);
             if (jumper == null)
             {
                 return HttpNotFound();
@@ -110,9 +111,16 @@ namespace Scrambles.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Jumper jumper = db.Users.Find(id);
-            db.Users.Remove(jumper);
+            Jumper jumper = db.Jumpers.Find(id);
+            db.Jumpers.Remove(jumper);
             db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Randomize()
+        {
+            var service = new RandomizationWebService(db);
+            service.Randomize();
             return RedirectToAction("Index");
         }
 
