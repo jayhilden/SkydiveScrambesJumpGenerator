@@ -54,8 +54,13 @@
     <Compile Include="Migrations\201503291851259_JumpGroupFlag.Designer.cs">
       <DependentUpon>201503291851259_JumpGroupFlag.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504052344426_AddRoundTable.cs" />
+    <Compile Include="Migrations\201504052344426_AddRoundTable.Designer.cs">
+      <DependentUpon>201504052344426_AddRoundTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Jumper.cs" />
+    <Compile Include="Models\Round.cs" />
     <Compile Include="PiiaDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -69,6 +74,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503291851259_JumpGroupFlag.resx">
       <DependentUpon>201503291851259_JumpGroupFlag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504052344426_AddRoundTable.resx">
+      <DependentUpon>201504052344426_AddRoundTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
