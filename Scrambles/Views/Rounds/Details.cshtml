@@ -1,0 +1,34 @@
+﻿@model Data.Sql.Models.Round
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Round</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RoundNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoundNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Formations)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Formations)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RoundID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

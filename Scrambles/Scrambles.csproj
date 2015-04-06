@@ -120,6 +120,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\JumpersController.cs" />
+    <Compile Include="Controllers\RoundsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -129,6 +130,22 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\randoms\randomA.jpg" />
+    <Content Include="Content\Images\randoms\randomB.jpg" />
+    <Content Include="Content\Images\randoms\randomC.jpg" />
+    <Content Include="Content\Images\randoms\randomD.jpg" />
+    <Content Include="Content\Images\randoms\randomE.jpg" />
+    <Content Include="Content\Images\randoms\randomF.jpg" />
+    <Content Include="Content\Images\randoms\randomG.jpg" />
+    <Content Include="Content\Images\randoms\randomH.jpg" />
+    <Content Include="Content\Images\randoms\randomJ.jpg" />
+    <Content Include="Content\Images\randoms\randomK.jpg" />
+    <Content Include="Content\Images\randoms\randomL.jpg" />
+    <Content Include="Content\Images\randoms\randomM.jpg" />
+    <Content Include="Content\Images\randoms\randomN.jpg" />
+    <Content Include="Content\Images\randoms\randomO.jpg" />
+    <Content Include="Content\Images\randoms\randomP.jpg" />
+    <Content Include="Content\Images\randoms\randomQ.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -163,10 +180,14 @@
     <Content Include="Views\Jumpers\Delete.cshtml" />
     <Content Include="Views\Jumpers\Edit.cshtml" />
     <Content Include="Views\Jumpers\Index.cshtml" />
+    <Content Include="Views\Rounds\Create.cshtml" />
+    <Content Include="Views\Rounds\Delete.cshtml" />
+    <Content Include="Views\Rounds\Details.cshtml" />
+    <Content Include="Views\Rounds\Edit.cshtml" />
+    <Content Include="Views\Rounds\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Images\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
