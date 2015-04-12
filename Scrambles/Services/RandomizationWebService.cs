@@ -32,8 +32,8 @@ namespace Scrambles.Services
             AssignUpDown(JumpGroupFlag.Right);
             _db.RoundJumperMaps.RemoveRange(_db.RoundJumperMaps);
             _db.SaveChanges();
-            //AssignJumpersToRound(JumpGroupFlag.Left);
-            //AssignJumpersToRound(JumpGroupFlag.Right);
+            AssignJumpersToRound(JumpGroupFlag.Left);
+            AssignJumpersToRound(JumpGroupFlag.Right);
         }
 
         #region privates
@@ -69,9 +69,10 @@ namespace Scrambles.Services
             var jumpers = _db.Jumpers.Where(x => x.JumpGroup == group);
             var up = jumpers.Where(x => x.RandomizedUpDown == UpDownFlag.UpJumper).OrderByDescending(x=>x.NumberOfJumps).ToList();
             var down = jumpers.Where(x => x.RandomizedUpDown == UpDownFlag.DownJumper).OrderByDescending(x => x.NumberOfJumps).ToList();
-            foreach (var round in _db.Rounds.OrderBy(x => x.RoundNumber))
+            var roundList = _db.Rounds.OrderBy(x => x.RoundNumber).ToList();
+            foreach (var round in roundList)
             {
-                AssignNumbersToRound(round, up, down);
+                AssignNumbersToRound(round, up.Clone(), down.Clone());
             }
         }
 
@@ -80,11 +81,12 @@ namespace Scrambles.Services
         /// </summary>
         private void AssignNumbersToRound(Round r, IList<Jumper> upJumpers, IList<Jumper> downJumpers)
         {
-            var skipCount = r.RoundNumber;
+            upJumpers = upJumpers.Shuffle().ToList();
+            downJumpers = downJumpers.Shuffle().ToList();
+            const int index1 = 0;
+            const int index2 = 1;
             while (upJumpers.Count > 0)
             {
-                var index1 = 0;
-                var index2 = skipCount;
                 var up1 = upJumpers[index1];
                 var up2 = upJumpers[index2];
                 var down1 = downJumpers[index1];
@@ -98,10 +100,10 @@ namespace Scrambles.Services
                     DownJumper2ID = down2.JumperID
                 };
                 _db.RoundJumperMaps.Add(map);
-                upJumpers.RemoveAt(index1);
-                upJumpers.RemoveAt(index2);
-                downJumpers.RemoveAt(index1);
-                downJumpers.RemoveAt(index2);
+                upJumpers.Remove(up1);
+                upJumpers.Remove(up2);
+                downJumpers.Remove(down1);
+                downJumpers.Remove(down2);
             }
             _db.SaveChanges();
 

@@ -24,7 +24,7 @@ namespace Data.Sql.Models
     }
 
     [DebuggerDisplay("{FirstName} {LastName} ({NumberOfJumps})")]
-    public class Jumper
+    public class Jumper : ICloneable
     {
         [Key]
         public int JumperID { get; set; }
@@ -57,5 +57,10 @@ namespace Data.Sql.Models
         [DisplayName("Randomized Letter assigned")]
         [MaxLength(1)]
         public string RandomizedLetter { get; set; }
+
+        public object Clone()
+        {
+            return AutoMapper.Mapper.Map<Jumper>(this);
+        }
     }
 }
