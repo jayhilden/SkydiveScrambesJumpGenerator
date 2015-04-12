@@ -119,12 +119,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DrawController.cs" />
     <Compile Include="Controllers\JumpersController.cs" />
     <Compile Include="Controllers\RoundsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ExtensionMethods.cs" />
     <Compile Include="Services\RandomizationWebService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +188,7 @@
     <Content Include="Views\Rounds\Details.cshtml" />
     <Content Include="Views\Rounds\Edit.cshtml" />
     <Content Include="Views\Rounds\Index.cshtml" />
+    <None Include="Views\Draw\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

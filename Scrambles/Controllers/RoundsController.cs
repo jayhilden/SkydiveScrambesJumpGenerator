@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Data.Sql;
 using Data.Sql.Models;
@@ -13,12 +9,12 @@ namespace Scrambles.Controllers
 {
     public class RoundsController : Controller
     {
-        private PiiaDb db = new PiiaDb();
+        private readonly PiiaDb _db = new PiiaDb();
 
         // GET: Rounds
         public ActionResult Index()
         {
-            return View(db.Rounds.ToList());
+            return View(_db.Rounds.ToList());
         }
 
         // GET: Rounds/Details/5
@@ -28,7 +24,7 @@ namespace Scrambles.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Round round = db.Rounds.Find(id);
+            Round round = _db.Rounds.Find(id);
             if (round == null)
             {
                 return HttpNotFound();
@@ -51,8 +47,8 @@ namespace Scrambles.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Rounds.Add(round);
-                db.SaveChanges();
+                _db.Rounds.Add(round);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +62,7 @@ namespace Scrambles.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Round round = db.Rounds.Find(id);
+            Round round = _db.Rounds.Find(id);
             if (round == null)
             {
                 return HttpNotFound();
@@ -83,8 +79,8 @@ namespace Scrambles.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(round).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(round).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(round);
@@ -97,7 +93,7 @@ namespace Scrambles.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Round round = db.Rounds.Find(id);
+            Round round = _db.Rounds.Find(id);
             if (round == null)
             {
                 return HttpNotFound();
@@ -110,9 +106,9 @@ namespace Scrambles.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Round round = db.Rounds.Find(id);
-            db.Rounds.Remove(round);
-            db.SaveChanges();
+            Round round = _db.Rounds.Find(id);
+            _db.Rounds.Remove(round);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +116,7 @@ namespace Scrambles.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
