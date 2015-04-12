@@ -21,42 +21,30 @@ namespace Scrambles.Services
         /// </summary>
         public void Randomize()
         {
-            var mod = _db.Jumpers.Count()%4;
+            var mod = _db.Jumpers.Count()%8;
             if (mod != 0)
             {
-                var msg = string.Format("The number of jumpers must be divisible by 4, please add {0} placehold jumpers", 4 - mod);
+                var msg = string.Format("The number of jumpers must be divisible by 8, please add {0} placehold jumpers", 8 - mod);
                 throw new Exception(msg);
-            }
-            AssignUpDown();
-            AssignGroup();
-        }
-
-        /// <summary>
-        /// Assign 2 up jumpers and 2 down jumpers to a team
-        /// </summary>
-        public void AssignNumbersToRound(Round r, List<Jumper> upJumpers, List<Jumper> downJumpers, int numberOfTeams)
-        {
-            var skipCount = r.RoundNumber;
-            var retval = new List<string>();
-            var upCount = upJumpers.Count;
-            for (var i = 0; i < numberOfTeams; i++)
-            {
-                var up1 = upJumpers[i % upCount];
-                var up2 = upJumpers[i + skipCount % upCount];
-                var down1 = downJumpers[i%upCount];
-                var down2 = downJumpers[i + skipCount % upCount];
-            }
-
+            }            
+            AssignLeftRight();
+            AssignUpDown(JumpGroupFlag.Left);
+            AssignUpDown(JumpGroupFlag.Right);
+            _db.RoundJumperMaps.RemoveRange(_db.RoundJumperMaps);
+            _db.SaveChanges();
+            //AssignJumpersToRound(JumpGroupFlag.Left);
+            //AssignJumpersToRound(JumpGroupFlag.Right);
         }
 
         #region privates
 
-        private void AssignUpDown()
+        private void AssignUpDown(JumpGroupFlag leftRight)
         {
-            var cnt = _db.Jumpers.Count();
-            var upJumperCount = Math.Ceiling(cnt/(decimal) 2);
+            var jumpersIngroup = _db.Jumpers.Where(x => x.JumpGroup == leftRight);
+            var cnt = jumpersIngroup.Count();
+            var upJumperCount = cnt/2;
             var i = 0;
-            foreach (var jumper in _db.Jumpers.OrderByDescending(x => x.NumberOfJumps))
+            foreach (var jumper in jumpersIngroup.OrderByDescending(x => x.NumberOfJumps))
             {
                 var upDown = (++i <= upJumperCount) ? UpDownFlag.UpJumper : UpDownFlag.DownJumper;
                 jumper.RandomizedUpDown = upDown;
@@ -64,7 +52,7 @@ namespace Scrambles.Services
             _db.SaveChanges();
         }
 
-        private void AssignGroup()
+        private void AssignLeftRight()
         {
             var i = 0;
             foreach (var jumper in _db.Jumpers.OrderByDescending(x => x.NumberOfJumps))
@@ -73,6 +61,50 @@ namespace Scrambles.Services
                 jumper.JumpGroup = leftRight;
             }
             _db.SaveChanges();
+        }
+
+
+        private void AssignJumpersToRound(JumpGroupFlag group)
+        {
+            var jumpers = _db.Jumpers.Where(x => x.JumpGroup == group);
+            var up = jumpers.Where(x => x.RandomizedUpDown == UpDownFlag.UpJumper).OrderByDescending(x=>x.NumberOfJumps).ToList();
+            var down = jumpers.Where(x => x.RandomizedUpDown == UpDownFlag.DownJumper).OrderByDescending(x => x.NumberOfJumps).ToList();
+            foreach (var round in _db.Rounds.OrderBy(x => x.RoundNumber))
+            {
+                AssignNumbersToRound(round, up, down);
+            }
+        }
+
+        /// <summary>
+        /// Assign 2 up jumpers and 2 down jumpers to a team
+        /// </summary>
+        private void AssignNumbersToRound(Round r, IList<Jumper> upJumpers, IList<Jumper> downJumpers)
+        {
+            var skipCount = r.RoundNumber;
+            while (upJumpers.Count > 0)
+            {
+                var index1 = 0;
+                var index2 = skipCount;
+                var up1 = upJumpers[index1];
+                var up2 = upJumpers[index2];
+                var down1 = downJumpers[index1];
+                var down2 = downJumpers[index2];
+                var map = new RoundJumperMap
+                {
+                    RoundID = r.RoundID,
+                    UpJumper1ID = up1.JumperID,
+                    UpJumper2ID = up2.JumperID,
+                    DownJumper1ID = down1.JumperID,
+                    DownJumper2ID = down2.JumperID
+                };
+                _db.RoundJumperMaps.Add(map);
+                upJumpers.RemoveAt(index1);
+                upJumpers.RemoveAt(index2);
+                downJumpers.RemoveAt(index1);
+                downJumpers.RemoveAt(index2);
+            }
+            _db.SaveChanges();
+
         }
 
         #endregion
