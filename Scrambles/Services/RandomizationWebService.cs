@@ -16,6 +16,9 @@ namespace Scrambles.Services
             _db = db;
         }
 
+        /// <summary>
+        /// put the jumpers into up/down and left/right groups
+        /// </summary>
         public void Randomize()
         {
             var mod = _db.Jumpers.Count()%4;
@@ -28,10 +31,30 @@ namespace Scrambles.Services
             AssignGroup();
         }
 
+        /// <summary>
+        /// Assign 2 up jumpers and 2 down jumpers to a team
+        /// </summary>
+        public void AssignNumbersToRound(Round r, List<Jumper> upJumpers, List<Jumper> downJumpers, int numberOfTeams)
+        {
+            var skipCount = r.RoundNumber;
+            var retval = new List<string>();
+            var upCount = upJumpers.Count;
+            for (var i = 0; i < numberOfTeams; i++)
+            {
+                var up1 = upJumpers[i % upCount];
+                var up2 = upJumpers[i + skipCount % upCount];
+                var down1 = downJumpers[i%upCount];
+                var down2 = downJumpers[i + skipCount % upCount];
+            }
+
+        }
+
+        #region privates
+
         private void AssignUpDown()
         {
             var cnt = _db.Jumpers.Count();
-            var upJumperCount = Math.Ceiling(cnt / (decimal)2);
+            var upJumperCount = Math.Ceiling(cnt/(decimal) 2);
             var i = 0;
             foreach (var jumper in _db.Jumpers.OrderByDescending(x => x.NumberOfJumps))
             {
@@ -46,10 +69,13 @@ namespace Scrambles.Services
             var i = 0;
             foreach (var jumper in _db.Jumpers.OrderByDescending(x => x.NumberOfJumps))
             {
-                var leftRight = (++i % 2 == 0) ? JumpGroupFlag.Left : JumpGroupFlag.Right;
+                var leftRight = (++i%2 == 0) ? JumpGroupFlag.Left : JumpGroupFlag.Right;
                 jumper.JumpGroup = leftRight;
             }
             _db.SaveChanges();
         }
+
+        #endregion
+
     }
 }

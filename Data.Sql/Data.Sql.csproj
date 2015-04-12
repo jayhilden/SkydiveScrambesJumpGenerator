@@ -58,9 +58,14 @@
     <Compile Include="Migrations\201504052344426_AddRoundTable.Designer.cs">
       <DependentUpon>201504052344426_AddRoundTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504122158220_RoundJumperMap.cs" />
+    <Compile Include="Migrations\201504122158220_RoundJumperMap.Designer.cs">
+      <DependentUpon>201504122158220_RoundJumperMap.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Jumper.cs" />
     <Compile Include="Models\Round.cs" />
+    <Compile Include="Models\RoundJumperMap.cs" />
     <Compile Include="PiiaDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -77,6 +82,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504052344426_AddRoundTable.resx">
       <DependentUpon>201504052344426_AddRoundTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504122158220_RoundJumperMap.resx">
+      <DependentUpon>201504122158220_RoundJumperMap.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
