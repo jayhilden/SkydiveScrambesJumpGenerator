@@ -18,6 +18,12 @@ namespace Scrambles.Services
 
         public void Randomize()
         {
+            var mod = _db.Jumpers.Count()%4;
+            if (mod != 0)
+            {
+                var msg = string.Format("The number of jumpers must be divisible by 4, please add {0} placehold jumpers", 4 - mod);
+                throw new Exception(msg);
+            }
             AssignUpDown();
             AssignGroup();
         }
