@@ -80,7 +80,7 @@ namespace Scrambles.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "JumperID,FirstName,LastName,NumberOfJumps,Organizer,Paid,Comment,RandomizedUpDown,RandomizedLetter")] Jumper jumper)
+        public ActionResult Edit(Jumper jumper)
         {
             if (ModelState.IsValid)
             {
