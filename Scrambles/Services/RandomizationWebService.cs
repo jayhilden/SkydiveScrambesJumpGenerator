@@ -21,10 +21,10 @@ namespace Scrambles.Services
         /// </summary>
         public void Randomize()
         {
-            var mod = _db.Jumpers.Count()%8;
+            var mod = _db.Jumpers.Count()%4;
             if (mod != 0)
             {
-                var msg = string.Format("The number of jumpers must be divisible by 8, please add {0} placehold jumpers", 8 - mod);
+                var msg = string.Format("The number of jumpers must be divisible by 4, please add {0} placehold jumpers", 4 - mod);
                 throw new Exception(msg);
             }            
             AssignLeftRight();
@@ -54,10 +54,23 @@ namespace Scrambles.Services
 
         private void AssignLeftRight()
         {
+            //if the # of jumpers is divisible by 8 then it will be even
+            //else if the # is divisible by 4 then put the last 4 all on the same side
             var i = 0;
+            var total = _db.Jumpers.Count();
+            var last4Left = total%8 != 0;//send the last 4 jumpers all to the left
             foreach (var jumper in _db.Jumpers.OrderByDescending(x => x.NumberOfJumps))
             {
-                var leftRight = (++i%2 == 0) ? JumpGroupFlag.Left : JumpGroupFlag.Right;
+                i++;
+                JumpGroupFlag leftRight;
+                if (last4Left && total - i <= 4)
+                {
+                    leftRight = JumpGroupFlag.Left;
+                }
+                else
+                {
+                    leftRight = (i%2 == 0) ? JumpGroupFlag.Left : JumpGroupFlag.Right;
+                }
                 jumper.JumpGroup = leftRight;
             }
             _db.SaveChanges();
