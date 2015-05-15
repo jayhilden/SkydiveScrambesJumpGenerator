@@ -22,3 +22,29 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.header {
+    font-size: 1.5em;
+}
+
+.blankLine {
+    border-bottom: 1px solid black;
+    min-height: 20px;
+}
+
+.drawSingleJumpTable {
+    width: 100%;
+}
+
+.drawSingleJumpTable > td {
+    width: 50%;
+}
+
+.leftside {
+    width: 50%;
+}
+
+.rightside {  
+    width: 50%;
+    border: 3px dashed black;
+}

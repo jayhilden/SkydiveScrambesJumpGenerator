@@ -1,15 +1,27 @@
 ﻿@model Scrambles.Models.DrawSingleJump
 
-<div class="drawSheet">
-    <div>
-        <div class="header">Jumpbers</div>
-        @Model.Jumper1.ToString()<br/>
-        @Model.Jumper2.ToString()<br/>
-        @Model.Jumper3.ToString()<br/>
-        @Model.Jumper4.ToString()<br/>
-    </div>
-    <div class="header">CameraMan</div>
-    <div class="blankLine"></div>
-</div>
+<table class="drawSingleJumpTable">
+    <tr>
+        <td class="leftside">
+                <div class="header">JUMPERS</div>
+                @Model.Jumper1.ToString()<br/>
+                @Model.Jumper2.ToString()<br/>
+                @Model.Jumper3.ToString()<br/>
+                @Model.Jumper4.ToString()<br/>
+                <div class="header">CAMERAMAN</div>
+                <div class="blankLine"></div>
+        </td>
+        <td class="rightside">
+                <div class="header">
+                    ROUND
+                    <div class="blankLine"></div>
+                </div>
+                <div class="header">
+                    POINTS
+                    <div class="blankLine"></div>
+                </div>
+        </td>
+    </tr>
+</table>
 
 
