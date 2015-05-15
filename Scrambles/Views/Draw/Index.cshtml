@@ -1,54 +1,12 @@
 ﻿@using Data.Sql.Models
-@model Data.Sql.PiiaDb
+@model IEnumerable<Scrambles.Models.DrawSingleJump>
 
 @{    
     Layout = null;
-    var jumpers = Model.Jumpers.ToList();
-    var rounds = Model.Rounds.OrderBy(x=>x.RoundNumber).ToList();
-    var upJumpers = jumpers.Where(x => x.RandomizedUpDown == UpDownFlag.UpJumper).OrderByDescending(x => x.NumberOfJumps).ToList();
-    var downJumpers = jumpers.Where(x => x.RandomizedUpDown == UpDownFlag.DownJumper).OrderByDescending(x => x.NumberOfJumps).ToList();
-    var numberOfTeams = jumpers.Count()/4;
-    var title = string.Format("{0} Team Draw", numberOfTeams);
-    ViewBag.Title = title;
+
 }
 
-<table style="width: 100%;">
-    <thead>
-    <tr>
-        <td colspan="2">@title</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>
-            <table>
-                <tr>
-                    <th>Up Jumpers</th>
-                </tr>
-                @for (var i = 0; i < upJumpers.Count(); i++)
-                {
-                    var jumper = upJumpers[i];
-                    <tr>
-                        <td>@(i + 1)) @jumper.FirstName @jumper.LastName (@jumper.NumberOfJumps)</td>
-                    </tr>
-                }
-            </table>
-        </td>
-        <td>
-            <table>
-                <tr>
-                    <th>Down Jumpers</th>
-                </tr>
-                @for (var i = 0; i < downJumpers.Count(); i++)
-                {
-                    var jumper = downJumpers[i];
-                    <tr>
-                        <td>@i.IntToLetter()) @jumper.FirstName @jumper.LastName (@jumper.NumberOfJumps)</td>
-                    </tr>
-                }
-            </table>
-        </td>
-    </tr>
-    
-    </tbody>
-</table>
+@foreach (var jump in Model)
+{    
+    @Html.DisplayFor(x=> jump)
+}

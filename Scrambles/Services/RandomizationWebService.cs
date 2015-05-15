@@ -85,14 +85,14 @@ namespace Scrambles.Services
             var roundList = _db.Rounds.OrderBy(x => x.RoundNumber).ToList();
             foreach (var round in roundList)
             {
-                AssignNumbersToRound(round, up.Clone(), down.Clone());
+                AssignNumbersToRound(round, group, up.Clone(), down.Clone());
             }
         }
 
         /// <summary>
         /// Assign 2 up jumpers and 2 down jumpers to a team
         /// </summary>
-        private void AssignNumbersToRound(Round r, IList<Jumper> upJumpers, IList<Jumper> downJumpers)
+        private void AssignNumbersToRound(Round r, JumpGroupFlag leftRight, IList<Jumper> upJumpers, IList<Jumper> downJumpers)
         {
             upJumpers = upJumpers.Shuffle().ToList();
             downJumpers = downJumpers.Shuffle().ToList();
@@ -110,7 +110,8 @@ namespace Scrambles.Services
                     UpJumper1ID = up1.JumperID,
                     UpJumper2ID = up2.JumperID,
                     DownJumper1ID = down1.JumperID,
-                    DownJumper2ID = down2.JumperID
+                    DownJumper2ID = down2.JumperID,
+                    JumpGroup = leftRight
                 };
                 _db.RoundJumperMaps.Add(map);
                 upJumpers.Remove(up1);
