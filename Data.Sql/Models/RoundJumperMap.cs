@@ -23,6 +23,8 @@ namespace Data.Sql.Models
         [ForeignKey("DownJumper2")]
         public int DownJumper2ID { get; set; }
 
+        public JumpGroupFlag JumpGroup { get; set; }
+
         public virtual Round Round { get; set; }
         
         public virtual Jumper UpJumper1 { get; set; }

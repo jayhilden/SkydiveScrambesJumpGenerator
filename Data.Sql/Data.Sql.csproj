@@ -68,6 +68,10 @@
     <Compile Include="Migrations\201504122158220_RoundJumperMap.Designer.cs">
       <DependentUpon>201504122158220_RoundJumperMap.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505152212094_RoundJumperMapGroupFlag.cs" />
+    <Compile Include="Migrations\201505152212094_RoundJumperMapGroupFlag.Designer.cs">
+      <DependentUpon>201505152212094_RoundJumperMapGroupFlag.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Jumper.cs" />
     <Compile Include="Models\Round.cs" />
@@ -91,6 +95,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504122158220_RoundJumperMap.resx">
       <DependentUpon>201504122158220_RoundJumperMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505152212094_RoundJumperMapGroupFlag.resx">
+      <DependentUpon>201505152212094_RoundJumperMapGroupFlag.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
