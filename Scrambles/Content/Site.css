@@ -30,10 +30,18 @@ textarea {
 .blankLine {
     border-bottom: 1px solid black;
     min-height: 20px;
+    padding-top: 70px;
+}
+
+@media print {
+    .drawSingleJumpTable {
+        page-break-after: always;
+    }
 }
 
 .drawSingleJumpTable {
     width: 100%;
+    font-size: 15pt;
 }
 
 .drawSingleJumpTable > td {
@@ -42,9 +50,25 @@ textarea {
 
 .leftside {
     width: 50%;
+    height: 400px;
+    vertical-align: top;
+    padding-right: 40px;
 }
 
 .rightside {  
-    width: 50%;
+    width: 50%;    
+    vertical-align: middle;
+    height: 400px;
+}
+
+.dashedBox {
     border: 3px dashed black;
+    min-height: 300px;
+    vertical-align: middle;
+    padding: 10px;
+    font-size: 1.5em;
+}
+
+.jumpers {
+    padding-left: 30px;
 }
