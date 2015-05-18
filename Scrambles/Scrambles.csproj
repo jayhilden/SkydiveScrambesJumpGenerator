@@ -201,6 +201,7 @@
     <Content Include="Views\Shared\DisplayTemplates\DrawSingleJump.cshtml" />
     <None Include="Views\Draw\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\FormationImages.cshtml" />
+    <None Include="Views\Jumpers\RandomizationError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

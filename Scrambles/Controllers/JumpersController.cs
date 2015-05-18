@@ -120,8 +120,21 @@ namespace Scrambles.Controllers
         public ActionResult Randomize()
         {
             var service = new RandomizationWebService(db);
-            service.Randomize();
+            try
+            {
+                service.Randomize();
+            }
+            catch (Exception e)
+            {
+                return View("RandomizationError", e);
+                //return RedirectToAction("RandomizationError", e);
+            }
             return RedirectToAction("Index");
+        }
+
+        public ActionResult RandomizationError(Exception e)
+        {
+            return View(e);
         }
 
         protected override void Dispose(bool disposing)
