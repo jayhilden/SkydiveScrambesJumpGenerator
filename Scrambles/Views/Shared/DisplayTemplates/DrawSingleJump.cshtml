@@ -18,11 +18,16 @@
                 <div class="header">
                     ROUND: @Model.RoundNumber
                 </div>
-                <div class="header" style="float:">
+                <div class="header" style="float: ">
                     POINTS:
                     <div class="blankLine"></div>
                 </div>
             </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            @Html.DisplayFor(x=>x.Formations)
         </td>
     </tr>
     <tr style="border-top: 5px solid black;">

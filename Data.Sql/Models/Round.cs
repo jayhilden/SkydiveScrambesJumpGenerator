@@ -15,6 +15,7 @@ namespace Data.Sql.Models
         public int RoundNumber { get; set; }
 
         [Required]
+        [UIHint("FormationImages")]//this is bastadizing the viewmodel and the repo model, in production code this would be broken out
         public string Formations { get; set; }
 
         public IEnumerable<string> FormationsSplit

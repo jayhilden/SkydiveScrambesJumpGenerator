@@ -26,6 +26,8 @@ namespace Scrambles.Services
             var drawSingleJumps = from d in draws
                 select new DrawSingleJump
                 {
+                    RoundNumber = d.Round.RoundNumber,
+                    Formations = d.Round.Formations,
                     Jumper1 = new DrawJumper
                     {
                         Name = d.UpJumper1.FirstName + " " + d.UpJumper1.LastName,
@@ -50,13 +52,6 @@ namespace Scrambles.Services
             return drawSingleJumps;
         }
 
-        public DrawJumper RepoToUI(Jumper jumper)
-        {
-            return new DrawJumper
-            {
-                Name = jumper.FirstName + " " + jumper.LastName,
-                NumberOfJumps = jumper.NumberOfJumps
-            };
-        }
+        
     }
 }

@@ -32,28 +32,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Formations)
         </td>
-        <td>
-            @foreach (var i in item.FormationsSplit)
-            {
-                string imgSource;
-                var upper = i.Trim().ToUpper();
-                bool isBlock = false;
-                int blockNumber;
-                if (int.TryParse(upper, out blockNumber))
-                {
-                    isBlock = true;
-                }
-                if (isBlock)
-                {
-                    throw new NotImplementedException("TODO: get block images");
-                }
-                else
-                {
-                    imgSource = @Url.Content("~/Content/Images/randoms/random" + upper + ".jpg");
-                }
-                <img src="@imgSource" alt="@upper" width="@imageSize" height="@imageSize"/>
-            }
-        </td>
+       
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.RoundID }) |
             @Html.ActionLink("Details", "Details", new { id=item.RoundID }) |

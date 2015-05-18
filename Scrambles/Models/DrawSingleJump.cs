@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -12,6 +13,8 @@ namespace Scrambles.Models
         public DrawJumper Jumper2 { get; set; }
         public DrawJumper Jumper3 { get; set; }
         public DrawJumper Jumper4 { get; set; }
+        [UIHint("FormationImages")]
+        public string Formations { get; set; }
     }
 
     public class DrawJumper
