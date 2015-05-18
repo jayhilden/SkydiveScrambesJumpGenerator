@@ -3,7 +3,7 @@
 <table class="drawSingleJumpTable">
     <tr>
         <td class="leftside">
-            <div class="header">JUMPERS</div>
+            <div class="header">JUMPERS (@Html.DisplayFor(x=> x.LeftRight))</div>
             <div class="jumpers">
                 @Model.Jumper1.ToString()<br/>
                 @Model.Jumper2.ToString()<br/>
@@ -33,7 +33,7 @@
     <tr style="border-top: 5px solid black;">
         <td class="leftside">
             <div class="header">Manifest & Team Copy</div>
-            <div class="header">JUMPERS</div>
+            <div class="header">JUMPERS (@Html.DisplayFor(x => x.LeftRight))</div>
             <div class="jumpers">
                 @Model.Jumper1.ToString()<br/>
                 @Model.Jumper2.ToString()<br/>

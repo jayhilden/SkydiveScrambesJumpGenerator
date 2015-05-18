@@ -26,6 +26,7 @@ namespace Scrambles.Services
             var drawSingleJumps = from d in draws
                 select new DrawSingleJump
                 {
+                    LeftRight = leftRight,
                     RoundNumber = d.Round.RoundNumber,
                     Formations = d.Round.Formations,
                     Jumper1 = new DrawJumper

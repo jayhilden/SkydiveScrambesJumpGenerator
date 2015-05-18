@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -23,7 +24,10 @@ namespace Scrambles.Controllers
         public ActionResult Index()
         {
             var left = _drawWebService.GetDraw(JumpGroupFlag.Left);
-            return View(left);
+            var right = _drawWebService.GetDraw(JumpGroupFlag.Right);
+            var all = left.ToList();
+            all.AddRange(right);
+            return View(all);
         }
     }
 }
