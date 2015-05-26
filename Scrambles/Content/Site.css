@@ -38,6 +38,10 @@ textarea {
         page-break-after: always;
         page-break-inside: avoid;
     }
+
+    .noPrint {
+        display: none;
+    }
 }
 
 .drawSingleJumpTable {
