@@ -60,6 +60,7 @@ namespace Scrambles.Controllers
             {
                 _db.Jumpers.Add(jumper);
                 _db.SaveChanges();
+                _randomizationWebService.RemoveRandomization();
                 return RedirectToAction("Index");
             }
 
