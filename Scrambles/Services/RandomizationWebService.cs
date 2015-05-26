@@ -26,14 +26,28 @@ namespace Scrambles.Services
             {
                 var msg = string.Format("The number of jumpers must be divisible by 4, please add {0} placehold jumpers", 4 - mod);
                 throw new Exception(msg);
-            }            
+            }
+            RemoveRandomization();
             AssignLeftRight();
             AssignUpDown(JumpGroupFlag.Left);
             AssignUpDown(JumpGroupFlag.Right);
-            _db.RoundJumperMaps.RemoveRange(_db.RoundJumperMaps);
-            _db.SaveChanges();
             AssignJumpersToRound(JumpGroupFlag.Left);
             AssignJumpersToRound(JumpGroupFlag.Right);
+        }
+
+        /// <summary>
+        /// delete the randomization, this is necessary if you want to add or remove a jumper
+        /// </summary>
+        public void RemoveRandomization()
+        {
+            _db.RoundJumperMaps.RemoveRange(_db.RoundJumperMaps);
+            foreach (var j in _db.Jumpers)
+            {
+                j.RandomizedLetter = null;
+                j.JumpGroup = null;
+                j.RandomizedUpDown = null;
+            }
+            _db.SaveChanges();
         }
 
         #region privates

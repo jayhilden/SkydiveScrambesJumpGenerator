@@ -14,12 +14,18 @@ namespace Scrambles.Controllers
 {
     public class JumpersController : Controller
     {
-        private PiiaDb db = new PiiaDb();
+        private readonly PiiaDb _db = new PiiaDb();
+        private RandomizationWebService _randomizationWebService;
+
+        public JumpersController()
+        {
+            _randomizationWebService = new RandomizationWebService(_db);
+        }
 
         // GET: Jumpers
         public ActionResult Index()
         {
-            return View(db.Jumpers.ToList());
+            return View(_db.Jumpers.ToList());
         }
 
         // GET: Jumpers/Details/5
@@ -29,7 +35,7 @@ namespace Scrambles.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Jumper jumper = db.Jumpers.Find(id);
+            Jumper jumper = _db.Jumpers.Find(id);
             if (jumper == null)
             {
                 return HttpNotFound();
@@ -52,8 +58,8 @@ namespace Scrambles.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Jumpers.Add(jumper);
-                db.SaveChanges();
+                _db.Jumpers.Add(jumper);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -67,7 +73,7 @@ namespace Scrambles.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Jumper jumper = db.Jumpers.Find(id);
+            Jumper jumper = _db.Jumpers.Find(id);
             if (jumper == null)
             {
                 return HttpNotFound();
@@ -84,8 +90,8 @@ namespace Scrambles.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(jumper).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(jumper).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(jumper);
@@ -98,7 +104,7 @@ namespace Scrambles.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Jumper jumper = db.Jumpers.Find(id);
+            Jumper jumper = _db.Jumpers.Find(id);
             if (jumper == null)
             {
                 return HttpNotFound();
@@ -111,18 +117,18 @@ namespace Scrambles.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Jumper jumper = db.Jumpers.Find(id);
-            db.Jumpers.Remove(jumper);
-            db.SaveChanges();
+            _randomizationWebService.RemoveRandomization();
+            Jumper jumper = _db.Jumpers.Find(id);
+            _db.Jumpers.Remove(jumper);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         public ActionResult Randomize()
         {
-            var service = new RandomizationWebService(db);
             try
             {
-                service.Randomize();
+                _randomizationWebService.Randomize();
             }
             catch (Exception e)
             {
@@ -141,7 +147,7 @@ namespace Scrambles.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
