@@ -12,13 +12,13 @@ namespace Scrambles.Controllers
 {
     public class DrawController : Controller
     {
-        private readonly PiiaDb _db = new PiiaDb();
         private readonly DrawWebService _drawWebService;
 
-        public DrawController()
+        public DrawController(DrawWebService drawWebService)
         {
-            _drawWebService = new DrawWebService(_db);
+            _drawWebService = drawWebService;
         }
+
 
         // GET: Draw
         public ActionResult Index()

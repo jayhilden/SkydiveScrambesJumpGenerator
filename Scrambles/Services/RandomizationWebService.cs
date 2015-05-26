@@ -16,6 +16,7 @@ namespace Scrambles.Services
             _db = db;
         }
 
+
         /// <summary>
         /// put the jumpers into up/down and left/right groups
         /// </summary>

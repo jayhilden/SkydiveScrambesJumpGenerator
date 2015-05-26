@@ -9,7 +9,12 @@ namespace Scrambles.Controllers
 {
     public class RoundsController : Controller
     {
-        private readonly PiiaDb _db = new PiiaDb();
+        private readonly PiiaDb _db;
+
+        public RoundsController(PiiaDb db)
+        {
+            _db = db;
+        }
 
         // GET: Rounds
         public ActionResult Index()

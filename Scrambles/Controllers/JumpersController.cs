@@ -14,13 +14,15 @@ namespace Scrambles.Controllers
 {
     public class JumpersController : Controller
     {
-        private readonly PiiaDb _db = new PiiaDb();
-        private RandomizationWebService _randomizationWebService;
+        private readonly PiiaDb _db;
+        private readonly RandomizationWebService _randomizationWebService;
 
-        public JumpersController()
+        public JumpersController(PiiaDb db, RandomizationWebService randomizationWebService)
         {
-            _randomizationWebService = new RandomizationWebService(_db);
+            _db = db;
+            _randomizationWebService = randomizationWebService;
         }
+
 
         // GET: Jumpers
         public ActionResult Index()
