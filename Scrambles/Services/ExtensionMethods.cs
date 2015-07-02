@@ -23,10 +23,9 @@ public static class ExtensionMethods
     /// <typeparam name="T"></typeparam>
     /// <param name="list"></param>
     /// <returns></returns>
-    public static IEnumerable<T> Shuffle<T>(this IList<T> list)
+    public static IEnumerable<T> Shuffle<T>(this IList<T> list, Random rng)
     {
         var choices = Enumerable.Range(0, list.Count).ToList();
-        var rng = new Random();
         for (var n = choices.Count; n > 1; n--)
         {
             var k = rng.Next(n);

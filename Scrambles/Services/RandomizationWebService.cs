@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Data.Sql;
 using Data.Sql.Models;
 
@@ -10,7 +9,7 @@ namespace Scrambles.Services
     public class RandomizationWebService
     {
         private readonly PiiaDb _db;
-
+        private readonly Random _random = new Random(); 
         public RandomizationWebService(PiiaDb db)
         {
             _db = db;
@@ -109,8 +108,8 @@ namespace Scrambles.Services
         /// </summary>
         private void AssignNumbersToRound(Round r, JumpGroupFlag leftRight, IList<Jumper> upJumpers, IList<Jumper> downJumpers)
         {
-            upJumpers = upJumpers.Shuffle().ToList();
-            downJumpers = downJumpers.Shuffle().ToList();
+            upJumpers = upJumpers.Shuffle(_random).ToList();
+            downJumpers = downJumpers.Shuffle(_random).ToList();
             const int index1 = 0;
             const int index2 = 1;
             while (upJumpers.Count > 0)
