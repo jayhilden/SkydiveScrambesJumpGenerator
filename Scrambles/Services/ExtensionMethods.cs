@@ -34,4 +34,9 @@ public static class ExtensionMethods
         }
         yield return list[choices[0]];
     }
+
+    public static LinkedListNode<T> NextOrFirst<T>(this LinkedListNode<T> linkedListNode)
+    {
+        return linkedListNode.Next ?? linkedListNode.List.First;
+    }
 }
