@@ -101,14 +101,18 @@ namespace Scrambles.Services
             AddJumpersToLinkedLists(down, out c, out d);
 
             var teamCount = a.Count;
-            var aCurrent = a.First;
-            var bCurrent = b.First;
-            var cCurrent = c.First;
-            var dCurrent = d.First;
-            foreach (var round in _db.Rounds.OrderBy(x => x.RoundNumber).ToList())//toList is here so that there aren't open transactions
+            var aStart = a.First;
+            var bStart = b.First;
+            var cStart = c.First;
+            var dStart = d.First;
+            foreach (var round in _db.Rounds.OrderBy(x => x.RoundNumber))
             {
-                AssignNumbersToRound(round, group, teamCount, aCurrent, bCurrent, cCurrent, dCurrent);
+                bStart = bStart.NextOrFirst();//+1
+                cStart = cStart.NextOrFirst().NextOrFirst();//+2
+                dStart = dStart.NextOrFirst().NextOrFirst().NextOrFirst();//+3
+                AssignNumbersToRound(round, group, teamCount, aStart, bStart, cStart, dStart);
             }
+            _db.SaveChanges();
         }
 
 
@@ -139,9 +143,7 @@ namespace Scrambles.Services
                 up2 = up2.NextOrFirst();
                 down1 = down1.NextOrFirst();
                 down2 = down2.NextOrFirst();
-            }
-            _db.SaveChanges();
-
+            }            
         }
 
         private static void AddJumpersToLinkedLists(List<Jumper> jumpers, out LinkedList<Jumper> even, out LinkedList<Jumper> odd)
