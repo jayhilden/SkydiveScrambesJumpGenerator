@@ -46,6 +46,11 @@ namespace Data.Sql
             return Database.BeginTransaction();
         }
 
+        public int ExecuteSqlCommand(string sql, params object[] parameters)
+        {
+            return Database.ExecuteSqlCommand(sql, parameters);
+        }
+
         public DbRawSqlQuery<TElement> SqlQuery<TElement>(string sql, params object[] parameters)
         {
             return Database.SqlQuery<TElement>(sql, parameters);

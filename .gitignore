@@ -176,3 +176,5 @@ _ReSharper.*
 PublishProfiles
 *.DS_Store
 
+.vs/
+
