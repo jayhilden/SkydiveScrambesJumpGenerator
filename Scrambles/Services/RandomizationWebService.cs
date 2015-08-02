@@ -68,10 +68,18 @@ namespace Scrambles.Services
 
         private void AssignLeftRight()
         {
+            var total = _db.Jumpers.Count();
+            //if we have less than 8*4 people then the randomization won't work well with 2 separate
+            //groups, so just put everyone in one group and move on
+            if (total < 8*4)
+            {
+                _db.ExecuteSqlCommand("UPDATE Jumper SET JumpGroup = @p0", (int) JumpGroupFlag.Left);
+                return;
+            }
+
             //if the # of jumpers is divisible by 8 then it will be even
             //else if the # is divisible by 4 then put the last 4 all on the same side
             var i = 0;
-            var total = _db.Jumpers.Count();
             var last4Left = total%8 != 0;//send the last 4 jumpers all to the left
             foreach (var jumper in _db.Jumpers.OrderByDescending(x => x.NumberOfJumps))
             {
@@ -94,6 +102,10 @@ namespace Scrambles.Services
         private void AssignJumpersToRounds(JumpGroupFlag group)
         {
             var jumpers = _db.Jumpers.Where(x => x.JumpGroup == group);
+            if (!jumpers.Any())
+            {
+                return;
+            }
             var up = jumpers.Where(x => x.RandomizedUpDown == UpDownFlag.UpJumper).OrderByDescending(x => x.NumberOfJumps).ToList();
             var down = jumpers.Where(x => x.RandomizedUpDown == UpDownFlag.DownJumper).OrderByDescending(x => x.NumberOfJumps).ToList();
             LinkedList<Jumper> a, b, c, d;
