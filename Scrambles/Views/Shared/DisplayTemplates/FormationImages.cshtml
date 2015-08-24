@@ -1,0 +1,26 @@
+﻿@model string
+
+@{
+    const string imageSize = "200px";
+}
+           
+@foreach (var i in Model.Split(','))
+{
+    string imgSource;
+    var upper = i.Trim().ToUpper();
+    var isBlock = false;
+    int blockNumber;
+    if (int.TryParse(upper, out blockNumber))
+    {
+        isBlock = true;
+    }
+    if (isBlock)
+    {
+        throw new NotImplementedException("TODO: get block images");
+    }
+    else
+    {
+        imgSource = @Url.Content("~/Content/Images/randoms/random" + upper + ".jpg");
+    }
+    <img src="@imgSource" alt="@upper" width="@imageSize" height="@imageSize" />
+}

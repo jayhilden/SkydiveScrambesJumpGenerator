@@ -1,0 +1,59 @@
+﻿@model Scrambles.Models.DrawSingleJump
+
+<table class="drawSingleJumpTable">
+    <tr>
+        <td class="leftside">
+            <div class="header">JUMPERS (@Html.DisplayFor(x=> x.LeftRight))</div>
+            <div class="jumpers">
+                @Model.Jumper1.ToString()<br/>
+                @Model.Jumper2.ToString()<br/>
+                @Model.Jumper3.ToString()<br/>
+                @Model.Jumper4.ToString()<br/>
+            </div>
+            <div class="header" style="padding-top: 20px;">CAMERAMAN</div>
+            <div class="blankLine"></div>
+        </td>
+        <td class="rightside">
+            <div class="dashedBox">
+                <div class="header">
+                    ROUND: @Model.RoundNumber
+                </div>
+                <div class="header" style="float: ">
+                    POINTS:
+                    <div class="blankLine"></div>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr class="noPrint">
+        <td colspan="2">
+            @Html.DisplayFor(x=>x.Formations)
+        </td>
+    </tr>
+    <tr style="border-top: 5px solid black;">
+        <td class="leftside">
+            <div class="header">Manifest & Team Copy</div>
+            <div class="header">JUMPERS (@Html.DisplayFor(x => x.LeftRight))</div>
+            <div class="jumpers">
+                @Model.Jumper1.ToString()<br/>
+                @Model.Jumper2.ToString()<br/>
+                @Model.Jumper3.ToString()<br/>
+                @Model.Jumper4.ToString()<br/>
+            </div>
+            <div class="header" style="padding-top: 20px;">CAMERAMAN</div>
+            <div class="blankLine"></div>
+        </td>
+        <td class="rightside">
+            <div class="dashedBox">
+                <div class="header">
+                    ROUND: @Model.RoundNumber
+                </div>
+                <div class="header">LOAD:
+                    <div class="blankLine"></div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+

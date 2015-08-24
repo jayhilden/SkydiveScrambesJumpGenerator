@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Data.Sql.Models.Round>
+
+@{
+    ViewBag.Title = "Index";
+    const string imageSize = "200px";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RoundNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Formations)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Formations)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoundNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Formations)
+        </td>
+       
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RoundID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RoundID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RoundID })
+        </td>
+    </tr>
+}
+
+</table>

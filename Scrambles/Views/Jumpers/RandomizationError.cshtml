@@ -1,0 +1,14 @@
+﻿@model Exception
+
+@{
+    ViewBag.Title = "Randomization Error";
+    var e = Model;
+    while (e.InnerException != null)
+    {
+        e = e.InnerException;
+    }
+}
+
+<h3>The following error occurred during randomization: @e.Message</h3>
+
+<div style="font-size: 1.5em;">Please go back to correct the issue.</div>
