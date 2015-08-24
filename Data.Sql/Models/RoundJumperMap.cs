@@ -25,6 +25,8 @@ namespace Data.Sql.Models
 
         public JumpGroupFlag JumpGroup { get; set; }
 
+        public int? Score { get; set; }
+
         public virtual Round Round { get; set; }
         
         public virtual Jumper UpJumper1 { get; set; }
