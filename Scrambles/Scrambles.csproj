@@ -227,9 +227,11 @@
     <Content Include="Views\Shared\DisplayTemplates\DrawSingleJump.cshtml" />
     <Content Include="Views\Draw\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\FormationImages.cshtml" />
-    <Content Include="Views\Jumpers\RandomizationError.cshtml" />
-    <None Include="Views\Scores\Edit.cshtml" />
-    <None Include="Views\Scores\Index.cshtml" />
+    <Content Include="Views\Jumpers\RandomizationError.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Scores\Edit.cshtml" />
+    <Content Include="Views\Scores\Index.cshtml" />
     <Content Include="Views\Scores\Results.cshtml" />
   </ItemGroup>
   <ItemGroup>
