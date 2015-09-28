@@ -45,5 +45,27 @@ FROM dbo.RoundJumperMap map
             row.Score = roundData.Score;
             _db.SaveChanges();
         }
+
+        internal IEnumerable<ResultsListRow> GetResultsList(UpDownFlag upDown)
+        {
+            const string sql = @"
+SELECT j.FirstName + ' ' + j.LastName Name, 
+	ISNULL((SELECT SUM(Score)
+		FROM dbo.RoundJumperMap m 
+		WHERE UpJumper1ID = j.JumperID
+			OR m.UpJumper2ID = j.JumperID
+			OR m.DownJumper1ID = j.JumperID
+			OR m.DownJumper2ID = j.JumperID), 0) TotalScore
+FROM dbo.Jumper j
+WHERE j.RandomizedUpDown = @p0";
+            return _db.SqlQuery<ResultsListRow>(sql, (int) upDown);
+        }
+
+        public ResultsVM GetResultsViewModel()
+        {
+            var up = GetResultsList(UpDownFlag.UpJumper);
+            var down = GetResultsList(UpDownFlag.DownJumper);
+            return new ResultsVM(up, down);
+        }
     }
 }

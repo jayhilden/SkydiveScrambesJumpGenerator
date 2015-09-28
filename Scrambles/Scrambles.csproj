@@ -155,6 +155,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DrawSingleJump.cs" />
+    <Compile Include="Models\ResultsListRow.cs" />
+    <Compile Include="Models\ResultsVM.cs" />
     <Compile Include="Models\ScoresListRow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DrawWebService.cs" />
@@ -228,6 +230,7 @@
     <Content Include="Views\Jumpers\RandomizationError.cshtml" />
     <None Include="Views\Scores\Edit.cshtml" />
     <None Include="Views\Scores\Index.cshtml" />
+    <Content Include="Views\Scores\Results.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

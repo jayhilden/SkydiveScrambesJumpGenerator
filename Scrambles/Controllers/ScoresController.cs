@@ -41,5 +41,11 @@ namespace Scrambles.Controllers
             }
             return View(roundData);
         }
+
+        public ActionResult Results()
+        {
+            var data = _scoresWebService.GetResultsViewModel();
+            return View(data);
+        }
     }
 }
