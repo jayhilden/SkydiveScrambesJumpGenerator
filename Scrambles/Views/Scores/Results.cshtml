@@ -1,0 +1,62 @@
+﻿@model Scrambles.Models.ResultsVM
+
+<div class="container">
+    <div class="col-lg-6">
+        <h2><span class="panel-heading label label-primary">Up Jumpers</span></h2>
+        <table id="upJumpers">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Total Score</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.UpJumperScores)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(model => item.Name)</td>
+                    <td>@Html.DisplayFor(model => item.TotalScore)</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-6">
+        <h2><span class="panel-heading label label-primary">Down Jumpers</span></h2>
+        <table id="downJumpers">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Total Score</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.DownJumperScores)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(model => item.Name)</td>
+                    <td>@Html.DisplayFor(model => item.TotalScore)</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#upJumpers').DataTable({
+                paging: false,
+                searching: false,
+                order: [[1, "desc"]]
+            });
+            $('#downJumpers').DataTable({
+                paging: false,
+                searching: false,
+                order: [[1, "desc"]]
+            });
+        });
+    </script>
+} 
