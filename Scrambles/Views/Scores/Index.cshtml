@@ -1,0 +1,45 @@
+﻿@model System.Collections.Generic.IEnumerable<Scrambles.Models.ScoresListRow>
+
+
+<table id="table1">
+    <thead>
+    <tr>
+        <th>Edit</th>
+        <th>@Html.DisplayNameFor(model => model.RoundNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.Score)</th>
+        <th>@Html.DisplayNameFor(model => model.Jumper1)</th>
+        <th>@Html.DisplayNameFor(model => model.Jumper2)</th>
+        <th>@Html.DisplayNameFor(model => model.Jumper3)</th>
+        <th>@Html.DisplayNameFor(model => model.Jumper4)</th>
+        <th>@Html.DisplayNameFor(model => model.Camera)</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.ActionLink("Edit", "Edit", new { id = item.ID })</td>
+            <td>@Html.DisplayFor(model => item.RoundNumber)</td>
+            <td>@Html.DisplayFor(model => item.Score)</td>
+            <td>@Html.DisplayFor(model => item.Jumper1)</td>
+            <td>@Html.DisplayFor(model => item.Jumper2)</td>
+            <td>@Html.DisplayFor(model => item.Jumper3)</td>
+            <td>@Html.DisplayFor(model => item.Jumper4)</td>
+            <td>@Html.DisplayFor(model => item.Camera)</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#table1').DataTable({
+                paging: false,
+                searching: true,
+                order: [[1, "asc"],[2, "asc"]]
+            });
+        });
+    </script>
+}

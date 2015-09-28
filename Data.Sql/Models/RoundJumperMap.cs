@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,11 @@ namespace Data.Sql.Models
         public int DownJumper2ID { get; set; }
 
         public JumpGroupFlag JumpGroup { get; set; }
+
+        public int? Score { get; set; }
+
+        [MaxLength(100)]
+        public string Camera { get; set; }
 
         public virtual Round Round { get; set; }
         
