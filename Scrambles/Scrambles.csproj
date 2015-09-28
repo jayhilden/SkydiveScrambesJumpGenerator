@@ -226,6 +226,7 @@
     <Content Include="Views\Draw\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\FormationImages.cshtml" />
     <Content Include="Views\Jumpers\RandomizationError.cshtml" />
+    <None Include="Views\Scores\Edit.cshtml" />
     <None Include="Views\Scores\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,7 @@
 <table id="table1">
     <thead>
     <tr>
-        <th class="hidden">ID</th>
+        <th>Edit</th>
         <th>@Html.DisplayNameFor(model => model.RoundNumber)</th>
         <th>@Html.DisplayNameFor(model => model.Score)</th>
         <th>@Html.DisplayNameFor(model => model.Jumper1)</th>
@@ -18,7 +18,7 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td class="hidden">@Html.DisplayFor(model => item.ID)</td>
+            <td>@Html.ActionLink("Edit", "Edit", new { id = item.ID })</td>
             <td>@Html.DisplayFor(model => item.RoundNumber)</td>
             <td>@Html.DisplayFor(model => item.Score)</td>
             <td>@Html.DisplayFor(model => item.Jumper1)</td>
@@ -37,7 +37,8 @@
         $(document).ready(function() {
             $('#table1').DataTable({
                 paging: false,
-                searching: false,
+                searching: true,
+                order: [[1, "asc"],[2, "asc"]]
             });
         });
     </script>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Data.Sql;
+using Data.Sql.Models;
 using Scrambles.Models;
 
 namespace Scrambles.Services
@@ -30,6 +31,19 @@ SELECT map.ID,
 FROM dbo.RoundJumperMap map
 ";
             return _db.SqlQuery<ScoresListRow>(query).ToList();
+        }
+
+        public RoundJumperMap GetRow(int roundJumperMapID)
+        {
+            return _db.RoundJumperMaps.Single(x => x.ID == roundJumperMapID);
+        }
+
+        public void Save(RoundJumperMap roundData)
+        {
+            var row = _db.RoundJumperMaps.Single(x => x.ID == roundData.ID);
+            row.Camera = roundData.Camera;
+            row.Score = roundData.Score;
+            _db.SaveChanges();
         }
     }
 }
