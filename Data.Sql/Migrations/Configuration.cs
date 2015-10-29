@@ -1,18 +1,18 @@
+using Data.Sql.Models;
+
 namespace Data.Sql.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Data.Sql.PiiaDb>
+    internal sealed class Configuration : DbMigrationsConfiguration<PiiaDb>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(Data.Sql.PiiaDb context)
+        protected override void Seed(PiiaDb context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -26,6 +26,25 @@ namespace Data.Sql.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            SeedConfiguration(context);
+        }
+
+        private void SeedConfiguration(PiiaDb context)
+        {
+            ConfigurationAddIfNotExists(context, new Models.Configuration {
+                ConfigurationID = (int)ConfigurationKeys.RandomizationLocked,
+                ConfigurationKey = "Randomization Locked",
+                ConfigurationValue = "1"
+                });
+        }
+
+        private void ConfigurationAddIfNotExists(PiiaDb db, Models.Configuration config)
+        {
+            if (!db.Configurations.Any(x => x.ConfigurationID == config.ConfigurationID))
+            {
+                db.Configurations.Add(config);
+            }
         }
     }
 }

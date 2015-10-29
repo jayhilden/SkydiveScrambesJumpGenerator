@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Data.Sql;
 using Data.Sql.Models;
+using Scrambles.Models;
 using Scrambles.Services;
 
 namespace Scrambles.Controllers
@@ -27,46 +25,20 @@ namespace Scrambles.Controllers
         // GET: Jumpers
         public ActionResult Index()
         {
-            return View(_db.Jumpers.ToList());
+            var model = new JumperListViewModel
+            {
+                Jumpers = _db.Jumpers.ToList(),
+                RandomizationLocked = _randomizationWebService.RandomizationLocked()
+            };
+            return View(model);
         }
 
-        // GET: Jumpers/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Jumper jumper = _db.Jumpers.Find(id);
-            if (jumper == null)
-            {
-                return HttpNotFound();
-            }
-            return View(jumper);
-        }
 
         // GET: Jumpers/Create
         public ActionResult Create()
         {
-            return View();
-        }
-
-        // POST: Jumpers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "JumperID,FirstName,LastName,NumberOfJumps,Organizer,Paid,Comment,RandomizedUpDown,RandomizedLetter")] Jumper jumper)
-        {
-            if (ModelState.IsValid)
-            {
-                _db.Jumpers.Add(jumper);
-                _db.SaveChanges();
-                _randomizationWebService.RemoveRandomization();
-                return RedirectToAction("Index");
-            }
-
-            return View(jumper);
+            var model = new Jumper();
+            return View("Edit", model);
         }
 
         // GET: Jumpers/Edit/5
@@ -91,9 +63,17 @@ namespace Scrambles.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Jumper jumper)
         {
+            var debug = ModelState.GetErrors();
             if (ModelState.IsValid)
             {
-                _db.Entry(jumper).State = EntityState.Modified;
+                if (jumper.JumperID == 0)
+                {
+                    _db.Jumpers.Add(jumper);
+                }
+                else
+                {
+                    _db.Entry(jumper).State = EntityState.Modified;
+                }
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -121,7 +101,7 @@ namespace Scrambles.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             _randomizationWebService.RemoveRandomization();
-            Jumper jumper = _db.Jumpers.Find(id);
+            var jumper = _db.Jumpers.Find(id);
             _db.Jumpers.Remove(jumper);
             _db.SaveChanges();
             return RedirectToAction("Index");
@@ -153,6 +133,12 @@ namespace Scrambles.Controllers
                 _db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult LockUnlockRandomization(bool locked)
+        {
+            _randomizationWebService.LockUnlockRandomization(locked);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -1,54 +1,54 @@
 ﻿@using Data.Sql.Models
-@model IEnumerable<Data.Sql.Models.Jumper>
+@model Scrambles.Models.JumperListViewModel
 
 @{
     ViewBag.Title = "Jumper List";
+    var lockText = Model.RandomizationLocked ? "Unlock Randomization" : "Lock Randomization";
 }
+<h3 class="pull-left">
+    <a class="panel-heading label label-primary" href="@Url.Action("Create")">Add Jumper</a>
+</h3>
+<h3 class="pull-right">
+    <a class="panel-heading label label-primary" href="@Url.Action("Randomize")">Randomize</a>
+    <a class="panel-heading label label-danger" href="@Url.Action("LockUnlockRandomization", new {locked = !Model.RandomizationLocked})">@lockText</a>
+</h3>
+    
 
-<h2>@ViewBag.Title</h2>
-
-<div style="float: left">
-    @Html.ActionLink("Add Jumper", "Create")
-</div>
-<div style="float: right">
-    @Html.ActionLink("Randomize Jumpers!", "Randomize")
-
-</div>
 <table class="table" id="table1" data-order='[[ 2, "desc" ]]'>
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                First Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                Last Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NumberOfJumps)
+                Number of Jumps
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Organizer)
+                Organizer?
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Paid)
+                Paid?
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Comment)
+                Comment
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RandomizedUpDown)
+                Up/Down
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.JumpGroup)
+                Jump Group
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RandomizedLetter)
+                Randomized Letter
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Jumpers)
         {
             <tr>
                 <td>

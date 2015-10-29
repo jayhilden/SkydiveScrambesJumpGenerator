@@ -15,6 +15,7 @@ namespace Data.Sql
         public DbSet<Jumper> Jumpers { get; set; }
         public DbSet<Round> Rounds { get; set; }
         public DbSet<RoundJumperMap> RoundJumperMaps { get; set; }
+        public DbSet<Configuration> Configurations { get; set; }
 
         static PiiaDb()
         {
