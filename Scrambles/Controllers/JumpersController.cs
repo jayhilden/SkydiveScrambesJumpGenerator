@@ -63,7 +63,7 @@ namespace Scrambles.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Jumper jumper)
         {
-            var debug = ModelState.GetErrors();
+            //var debug = ModelState.GetErrors();
             if (ModelState.IsValid)
             {
                 if (jumper.JumperID == 0)
