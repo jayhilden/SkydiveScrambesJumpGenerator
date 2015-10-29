@@ -57,6 +57,13 @@ FROM dbo.RoundJumperMap map
             return _db.Jumpers
                 .OrderBy(x => x.FirstName)
                 .ThenBy(x => x.LastName)
+                .Select(x=> new
+                {
+                    x.JumperID,
+                    x.FirstName,
+                    x.LastName
+                })
+                .ToList()
                 .Select(x => new SelectListItem
                 {
                     Text = $"{x.FirstName} {x.LastName}",
