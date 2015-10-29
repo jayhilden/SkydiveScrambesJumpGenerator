@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 
 // ReSharper disable once CheckNamespace
@@ -38,5 +39,10 @@ public static class ExtensionMethods
     public static LinkedListNode<T> NextOrFirst<T>(this LinkedListNode<T> linkedListNode)
     {
         return linkedListNode.Next ?? linkedListNode.List.First;
+    }
+
+    public static IEnumerable<ModelError> GetErrors(this ModelStateDictionary modelState)
+    {
+        return modelState.Values.SelectMany(v => v.Errors);
     }
 }

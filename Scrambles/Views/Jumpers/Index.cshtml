@@ -1,54 +1,49 @@
 ﻿@using Data.Sql.Models
-@model IEnumerable<Data.Sql.Models.Jumper>
+@model Scrambles.Models.JumperListViewModel
 
 @{
     ViewBag.Title = "Jumper List";
 }
+<h3>
+    <a class="panel-heading label label-primary pull-left" href="@Url.Action("Create")">Add Jumper</a>
+    <a class="panel-heading label label-primary pull-right" href="@Url.Action("Randomize")">Randomize</a>
+</h3>
 
-<h2>@ViewBag.Title</h2>
-
-<div style="float: left">
-    @Html.ActionLink("Add Jumper", "Create")
-</div>
-<div style="float: right">
-    @Html.ActionLink("Randomize Jumpers!", "Randomize")
-
-</div>
 <table class="table" id="table1" data-order='[[ 2, "desc" ]]'>
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                First Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                Last Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NumberOfJumps)
+                Number of Jumps
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Organizer)
+                Organizer?
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Paid)
+                Paid?
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Comment)
+                Comment
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RandomizedUpDown)
+                Up/Down
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.JumpGroup)
+                Jump Group
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RandomizedLetter)
+                Randomized Letter
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Jumpers)
         {
             <tr>
                 <td>

@@ -155,6 +155,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DrawSingleJump.cs" />
+    <Compile Include="Models\JumperListViewModel.cs" />
     <Compile Include="Models\ResultsListRow.cs" />
     <Compile Include="Models\ResultsVM.cs" />
     <Compile Include="Models\ScoresEditModel.cs" />
@@ -216,7 +217,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Jumpers\Create.cshtml" />
     <Content Include="Views\Jumpers\Delete.cshtml" />
     <Content Include="Views\Jumpers\Edit.cshtml" />
     <Content Include="Views\Jumpers\Index.cshtml" />

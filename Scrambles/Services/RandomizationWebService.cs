@@ -9,10 +9,26 @@ namespace Scrambles.Services
     public class RandomizationWebService
     {
         private readonly PiiaDb _db;
-        private readonly Random _random = new Random(); 
         public RandomizationWebService(PiiaDb db)
         {
             _db = db;
+        }
+
+        public bool RandomizationLocked()
+        {
+            var value = _db.Configurations
+                .Where(x => x.ConfigurationID == (int)ConfigurationKeys.RandomizationLocked)
+                .Select(x=>x.ConfigurationValue)
+                .Single();
+            return int.Parse(value) == 1;
+        }
+
+        public void LockUnlockRandomization(bool locked)
+        {
+            var stringVal = locked ? "1" : "0";
+            var db = _db.Configurations.Single(x => x.ConfigurationID == (int) ConfigurationKeys.RandomizationLocked);
+            db.ConfigurationValue = stringVal;
+            _db.SaveChanges();
         }
 
 
@@ -21,10 +37,15 @@ namespace Scrambles.Services
         /// </summary>
         public void Randomize()
         {
+            if (RandomizationLocked())
+            {
+                throw new Exception("Randomization is currently locked");
+            }
+
             var mod = _db.Jumpers.Count()%4;
             if (mod != 0)
             {
-                var msg = string.Format("The number of jumpers must be divisible by 4, please add {0} placehold jumpers", 4 - mod);
+                var msg = $"The number of jumpers must be divisible by 4, please add {4 - mod} placehold jumpers";
                 throw new Exception(msg);
             }
             RemoveRandomization();
@@ -40,6 +61,10 @@ namespace Scrambles.Services
         /// </summary>
         public void RemoveRandomization()
         {
+            if (RandomizationLocked())
+            {
+                throw new Exception("Cannot remove randomization, it is locked");
+            }
             _db.RoundJumperMaps.RemoveRange(_db.RoundJumperMaps);
             foreach (var j in _db.Jumpers.Where(x=>x.JumpGroup != null || x.RandomizedUpDown != null))
             {

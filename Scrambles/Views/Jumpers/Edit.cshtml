@@ -1,13 +1,10 @@
 ﻿@model Data.Sql.Models.Jumper
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Add/Edit Jumper";
 }
 
-<h2>Edit</h2>
-
-
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Jumpers"))
 {
     @Html.AntiForgeryToken()
     
@@ -106,5 +103,10 @@
 </div>
 
 @section Scripts {
-    
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#FirstName").focus();
+        });
+    </script>
 }
