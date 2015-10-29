@@ -34,16 +34,9 @@ namespace Data.Sql.Models
 
         public virtual Round Round { get; set; }
         
-        [DisplayName("Jumper 3")]
         public virtual Jumper UpJumper1 { get; set; }
-
-        [DisplayName("Jumper 4")]
         public virtual Jumper UpJumper2 { get; set; }
-
-        [DisplayName("Jumper 1")]
         public virtual Jumper DownJumper1 { get; set; }
-
-        [DisplayName("Jumper 2")]
         public virtual Jumper DownJumper2 { get; set; }
     }
 }
