@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Web.Mvc;
 using Data.Sql;
 using Data.Sql.Models;
 using Scrambles.Models;
@@ -33,16 +32,69 @@ FROM dbo.RoundJumperMap map
             return _db.SqlQuery<ScoresListRow>(query).ToList();
         }
 
-        public RoundJumperMap GetRow(int roundJumperMapID)
+        public ScoresEditModel GetEditModel(int roundJumperMapID)
         {
-            return _db.RoundJumperMaps.Single(x => x.ID == roundJumperMapID);
+            var dbRow = _db.RoundJumperMaps.Single(x => x.ID == roundJumperMapID);
+            
+            var editModel = new ScoresEditModel
+            {
+                RoundJumperMapID = dbRow.ID,
+                Camera = dbRow.Camera,
+                Score = dbRow.Score,
+                DownJumper1 = dbRow.DownJumper1ID,
+                DownJumper2 = dbRow.DownJumper2ID,
+                UpJumper1 = dbRow.UpJumper1ID,
+                UpJumper2 = dbRow.UpJumper2ID
+            };
+            PopulateLists(editModel);
+            return editModel;
         }
 
-        public void Save(RoundJumperMap roundData)
+        public void PopulateLists(ScoresEditModel editModel)
         {
-            var row = _db.RoundJumperMaps.Single(x => x.ID == roundData.ID);
-            row.Camera = roundData.Camera;
-            row.Score = roundData.Score;
+            var jumperList = BuildJumperList();
+            editModel.DownJumper1List = CloneListSetSelected(jumperList, editModel.DownJumper1);
+            editModel.DownJumper2List = CloneListSetSelected(jumperList, editModel.DownJumper2);
+            editModel.UpJumper1List = CloneListSetSelected(jumperList, editModel.UpJumper1);
+            editModel.UpJumper2List = CloneListSetSelected(jumperList, editModel.UpJumper2);
+        }
+
+        private List<SelectListItem> BuildJumperList()
+        {
+            return _db.Jumpers
+                .OrderBy(x => x.FirstName)
+                .ThenBy(x => x.LastName)
+                .Select(x=> new
+                {
+                    x.JumperID,
+                    x.FirstName,
+                    x.LastName
+                })
+                .ToList()
+                .Select(x => new SelectListItem
+                {
+                    Text = $"{x.FirstName} {x.LastName}",
+                    Value = x.JumperID.ToString(),
+                })
+                .ToList();
+        }
+
+        private List<SelectListItem> CloneListSetSelected(List<SelectListItem> selectList, int selectedID)
+        {
+            var clone = new List<SelectListItem>(selectList);
+            clone.Single(x => x.Value == selectedID.ToString()).Selected = true;
+            return clone;
+        }
+
+        public void Save(ScoresEditModel editModel)
+        {
+            var row = _db.RoundJumperMaps.Single(x => x.ID == editModel.RoundJumperMapID);
+            row.Camera = editModel.Camera;
+            row.Score = editModel.Score;
+            row.DownJumper1ID = editModel.DownJumper1;
+            row.DownJumper2ID = editModel.DownJumper2;
+            row.UpJumper1ID = editModel.UpJumper1;
+            row.UpJumper2ID = editModel.UpJumper2;
             _db.SaveChanges();
         }
 

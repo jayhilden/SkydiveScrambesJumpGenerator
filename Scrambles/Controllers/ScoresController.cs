@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Data.Sql.Models;
+using Scrambles.Models;
 using Scrambles.Services;
 
 namespace Scrambles.Controllers
@@ -26,20 +27,38 @@ namespace Scrambles.Controllers
 
         public ActionResult Edit(int id)
         {
-            var row = _scoresWebService.GetRow(id);
+            var row = _scoresWebService.GetEditModel(id);
             return View(row);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(RoundJumperMap roundData)
+        public ActionResult Edit(ScoresEditModel editModel)
         {
+            var dupCheck = new HashSet<int> {editModel.DownJumper1};
+            if (dupCheck.Contains(editModel.DownJumper2))
+            {
+                ModelState.AddModelError(nameof(editModel.DownJumper2), "Jumper cannot be listed twice.");
+            }
+            dupCheck.Add(editModel.DownJumper2);
+            if (dupCheck.Contains(editModel.UpJumper1))
+            {
+                ModelState.AddModelError(nameof(editModel.UpJumper1), "Jumper cannot be listed twice.");
+            }
+            dupCheck.Add(editModel.UpJumper1);
+            if (dupCheck.Contains(editModel.UpJumper2))
+            {
+                ModelState.AddModelError(nameof(editModel.UpJumper2), "Jumper cannot be listed twice.");
+            }
+            dupCheck.Add(editModel.UpJumper2);
             if (ModelState.IsValid)
             {
-                _scoresWebService.Save(roundData);
+                _scoresWebService.Save(editModel);
                 return RedirectToAction("Index");
             }
-            return View(roundData);
+
+            _scoresWebService.PopulateLists(editModel);
+            return View(editModel);
         }
 
         public ActionResult Results()
