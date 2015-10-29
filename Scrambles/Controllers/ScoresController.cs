@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Data.Sql.Models;
+using Scrambles.Models;
 using Scrambles.Services;
 
 namespace Scrambles.Controllers
@@ -26,13 +27,13 @@ namespace Scrambles.Controllers
 
         public ActionResult Edit(int id)
         {
-            var row = _scoresWebService.GetRow(id);
+            var row = _scoresWebService.GetEditModel(id);
             return View(row);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(RoundJumperMap roundData)
+        public ActionResult Edit(ScoresEditModel roundData)
         {
             if (ModelState.IsValid)
             {

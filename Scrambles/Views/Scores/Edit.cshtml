@@ -1,4 +1,4 @@
-﻿@model Data.Sql.Models.RoundJumperMap
+﻿@model Scrambles.Models.ScoresEditModel
 
 
 
@@ -11,7 +11,7 @@
         <h4>Jumper</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.RoundJumperMapID)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Score, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -32,28 +32,28 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DownJumper1, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.DisplayFor(x => x.DownJumper1.LastName)
+                @Html.DropDownListFor(x=> x.DownJumper1, Model.DownJumper1List)
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.DownJumper2, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.DisplayFor(x => x.DownJumper2.LastName)
+                @Html.DropDownListFor(x => x.DownJumper2, Model.DownJumper2List)
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.UpJumper1, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.DisplayFor(x => x.UpJumper1.LastName)
+                @Html.DropDownListFor(x => x.UpJumper1, Model.UpJumper1List)
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.UpJumper2, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DisplayFor(x => x.UpJumper2.LastName)
+                @Html.DropDownListFor(x => x.UpJumper2, Model.UpJumper2List)
             </div>
         </div>
 
