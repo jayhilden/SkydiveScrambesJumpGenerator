@@ -101,7 +101,7 @@ namespace Scrambles.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             _randomizationWebService.RemoveRandomization();
-            Jumper jumper = _db.Jumpers.Find(id);
+            var jumper = _db.Jumpers.Find(id);
             _db.Jumpers.Remove(jumper);
             _db.SaveChanges();
             return RedirectToAction("Index");
@@ -138,7 +138,7 @@ namespace Scrambles.Controllers
         public ActionResult LockUnlockRandomization(bool locked)
         {
             _randomizationWebService.LockUnlockRandomization(locked);
-            return View("Index");
+            return RedirectToAction("Index");
         }
     }
 }

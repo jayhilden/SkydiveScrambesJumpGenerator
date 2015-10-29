@@ -37,11 +37,6 @@ namespace Scrambles.Services
         /// </summary>
         public void Randomize()
         {
-            if (RandomizationLocked())
-            {
-                throw new Exception("Randomization is currently locked");
-            }
-
             var mod = _db.Jumpers.Count()%4;
             if (mod != 0)
             {
@@ -54,6 +49,7 @@ namespace Scrambles.Services
             AssignUpDown(JumpGroupFlag.Right);
             AssignJumpersToRounds(JumpGroupFlag.Left);
             AssignJumpersToRounds(JumpGroupFlag.Right);
+            LockUnlockRandomization(locked: true);
         }
 
         /// <summary>
@@ -63,7 +59,7 @@ namespace Scrambles.Services
         {
             if (RandomizationLocked())
             {
-                throw new Exception("Cannot remove randomization, it is locked");
+                throw new Exception("Randomization is locked");
             }
             _db.RoundJumperMaps.RemoveRange(_db.RoundJumperMaps);
             foreach (var j in _db.Jumpers.Where(x=>x.JumpGroup != null || x.RandomizedUpDown != null))
