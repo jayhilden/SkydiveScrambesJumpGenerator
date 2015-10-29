@@ -64,7 +64,6 @@ namespace Scrambles.Services
             _db.RoundJumperMaps.RemoveRange(_db.RoundJumperMaps);
             foreach (var j in _db.Jumpers.Where(x=>x.JumpGroup != null || x.RandomizedUpDown != null))
             {
-                j.RandomizedLetter = null;
                 j.JumpGroup = null;
                 j.RandomizedUpDown = null;
             }
