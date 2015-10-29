@@ -35,8 +35,8 @@ FROM dbo.RoundJumperMap map
         public ScoresEditModel GetEditModel(int roundJumperMapID)
         {
             var dbRow = _db.RoundJumperMaps.Single(x => x.ID == roundJumperMapID);
-            var jumperList = BuildJumperList();
-            return new ScoresEditModel
+            
+            var editModel = new ScoresEditModel
             {
                 RoundJumperMapID = dbRow.ID,
                 Camera = dbRow.Camera,
@@ -44,12 +44,19 @@ FROM dbo.RoundJumperMap map
                 DownJumper1 = dbRow.DownJumper1ID,
                 DownJumper2 = dbRow.DownJumper2ID,
                 UpJumper1 = dbRow.UpJumper1ID,
-                UpJumper2 = dbRow.UpJumper2ID,
-                DownJumper1List = CloneListSetSelected(jumperList, dbRow.DownJumper1ID),
-                DownJumper2List = CloneListSetSelected(jumperList, dbRow.DownJumper2ID),
-                UpJumper1List = CloneListSetSelected(jumperList, dbRow.UpJumper1ID),
-                UpJumper2List = CloneListSetSelected(jumperList, dbRow.UpJumper2ID)
+                UpJumper2 = dbRow.UpJumper2ID
             };
+            PopulateLists(editModel);
+            return editModel;
+        }
+
+        public void PopulateLists(ScoresEditModel editModel)
+        {
+            var jumperList = BuildJumperList();
+            editModel.DownJumper1List = CloneListSetSelected(jumperList, editModel.DownJumper1);
+            editModel.DownJumper2List = CloneListSetSelected(jumperList, editModel.DownJumper2);
+            editModel.UpJumper1List = CloneListSetSelected(jumperList, editModel.UpJumper1);
+            editModel.UpJumper2List = CloneListSetSelected(jumperList, editModel.UpJumper2);
         }
 
         private List<SelectListItem> BuildJumperList()
