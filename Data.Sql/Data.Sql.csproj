@@ -80,6 +80,10 @@
     <Compile Include="Migrations\201510292030068_ConfigurationTable_24.Designer.cs">
       <DependentUpon>201510292030068_ConfigurationTable_24.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510292202245_DropRandomizationLetter_28.cs" />
+    <Compile Include="Migrations\201510292202245_DropRandomizationLetter_28.Designer.cs">
+      <DependentUpon>201510292202245_DropRandomizationLetter_28.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Configuration.cs" />
     <Compile Include="Models\Jumper.cs" />
@@ -113,6 +117,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510292030068_ConfigurationTable_24.resx">
       <DependentUpon>201510292030068_ConfigurationTable_24.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510292202245_DropRandomizationLetter_28.resx">
+      <DependentUpon>201510292202245_DropRandomizationLetter_28.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

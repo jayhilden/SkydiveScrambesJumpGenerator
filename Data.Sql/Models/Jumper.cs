@@ -54,10 +54,6 @@ namespace Data.Sql.Models
         [DisplayName("Jump Group")]
         public JumpGroupFlag? JumpGroup { get; set; }
 
-        [DisplayName("Randomized Letter assigned")]
-        [MaxLength(1)]
-        public string RandomizedLetter { get; set; }
-
         public object Clone()
         {
             return AutoMapper.Mapper.Map<Jumper>(this);
