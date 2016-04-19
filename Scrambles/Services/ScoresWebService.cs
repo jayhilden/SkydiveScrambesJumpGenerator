@@ -101,15 +101,15 @@ FROM dbo.RoundJumperMap map
         internal IEnumerable<ResultsListRow> GetResultsList(UpDownFlag upDown)
         {
             const string sql = @"
-SELECT j.FirstName + ' ' + j.LastName Name, 
-	ISNULL((SELECT SUM(Score)
-		FROM dbo.RoundJumperMap m 
-		WHERE UpJumper1ID = j.JumperID
+SELECT j.FirstName + ' ' + j.LastName Name, ISNULL(SUM(Score), 0) TotalScore, COUNT(m.ID) TotalJumps
+FROM dbo.Jumper j
+	LEFT OUTER JOIN dbo.RoundJumperMap m  ON (
+			m.UpJumper1ID = j.JumperID
 			OR m.UpJumper2ID = j.JumperID
 			OR m.DownJumper1ID = j.JumperID
-			OR m.DownJumper2ID = j.JumperID), 0) TotalScore
-FROM dbo.Jumper j
-WHERE j.RandomizedUpDown = @p0";
+			OR m.DownJumper2ID = j.JumperID)
+WHERE j.RandomizedUpDown = @p0
+GROUP BY j.FirstName + ' ' + j.LastName";
             return _db.SqlQuery<ResultsListRow>(sql, (int) upDown);
         }
 
