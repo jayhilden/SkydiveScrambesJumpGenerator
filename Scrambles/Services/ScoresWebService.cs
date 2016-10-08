@@ -16,7 +16,7 @@ namespace Scrambles.Services
             _db = db;
         }
 
-        public IEnumerable<ScoresListRow> GetList()
+        public ScoresListVM GetScoreListVM()
         {
             const string query = @"
 SELECT map.ID, 
@@ -30,7 +30,13 @@ SELECT map.ID,
     map.VideoUrl
 FROM dbo.RoundJumperMap map
 ";
-            return _db.SqlQuery<ScoresListRow>(query).ToList();
+            var scores = _db.SqlQuery<ScoresListRow>(query).ToList();
+            return new ScoresListVM
+            {
+                Scores = scores,
+                IsAdmin = UserService.IsAdmin()
+                
+            };
         }
 
         public ScoresEditModel GetEditModel(int roundJumperMapID)

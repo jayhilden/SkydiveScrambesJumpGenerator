@@ -1,30 +1,31 @@
-﻿@model IEnumerable<Data.Sql.Models.Round>
+﻿@model Scrambles.Models.RoundListVM
 
 @{
-    ViewBag.Title = "Index";
-    const string imageSize = "200px";
+    ViewBag.Title = "Rounds";
+    //const string imageSize = "200px";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (Model.IsAdmin)
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.RoundNumber)
+            @Html.DisplayNameFor(model => model.Rounds[0].RoundNumber)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Formations)
+            @Html.DisplayNameFor(model => model.Rounds[0].Formations)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Formations)
+            @Html.DisplayNameFor(model => model.Rounds[0].Formations)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Rounds) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.RoundNumber)
@@ -34,9 +35,12 @@
         </td>
        
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.RoundID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.RoundID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.RoundID })
+            @if (Model.IsAdmin)
+            {
+                @Html.ActionLink("Edit", "Edit", new {id = item.RoundID}) <text> | </text>
+                @Html.ActionLink("Details", "Details", new {id = item.RoundID}) <text> | </text>
+                @Html.ActionLink("Delete", "Delete", new {id = item.RoundID})
+            }
         </td>
     </tr>
 }
