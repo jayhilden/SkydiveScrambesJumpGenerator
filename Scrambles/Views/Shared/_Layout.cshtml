@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Data.Sql.Services
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -25,6 +26,16 @@
                     <li>@Html.ActionLink("Draw", "Index", "Draw")</li>
                     <li>@Html.ActionLink("Scores", "Index", "Scores")</li>
                     <li>@Html.ActionLink("Results", "Results", "Scores")</li>
+                </ul>
+                <ul class="nav navbar-nav pull-right">
+                    @if ((bool?) Session[PasswordService.SessionKeyName] == true)
+                    {
+                        <li>@Html.ActionLink("Logout", "Logout", "Admin")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Login", "Login", "Admin")</li>
+                    }
                 </ul>
             </div>
         </div>

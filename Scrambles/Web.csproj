@@ -151,6 +151,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\DrawController.cs" />
     <Compile Include="Controllers\JumpersController.cs" />
     <Compile Include="Controllers\RoundsController.cs" />
@@ -160,6 +161,7 @@
     </Compile>
     <Compile Include="Models\DrawSingleJump.cs" />
     <Compile Include="Models\JumperListViewModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ResultsListRow.cs" />
     <Compile Include="Models\ResultsVM.cs" />
     <Compile Include="Models\ScoresEditModel.cs" />
@@ -239,6 +241,7 @@
     <Content Include="Views\Scores\Edit.cshtml" />
     <Content Include="Views\Scores\Index.cshtml" />
     <Content Include="Views\Scores\Results.cshtml" />
+    <None Include="Views\Admin\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

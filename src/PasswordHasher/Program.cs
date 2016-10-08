@@ -6,37 +6,24 @@ using System.Text;
 using System.Threading.Tasks;
 using Data.Sql;
 using Data.Sql.Models;
+using Data.Sql.Services;
 
 namespace PasswordHasher
 {
     internal class Program
     {
+        private static readonly PasswordService PasswordService = new PasswordService(new PiiaDb());
         private static void Main(string[] args)
         {
             Console.WriteLine("This program is used to set the admin password");
             Console.WriteLine("Enter in the new password now");
             var password = GetPasswordLoop();
-            SavePassword(password);
+            PasswordService.SavePassword(password);
             Console.WriteLine("Password successfully hashed and saved.  Press any key to exit");
             Console.ReadKey();
         }
 
-        private static void SavePassword(string password)
-        {
-            using (var db = new PiiaDb())
-            {
-                var loopCountString = db.Configurations
-                    .Where(x => x.ConfigurationID == ConfigurationKeys.BcryptLoopCount)
-                    .Select(x => x.ConfigurationValue)
-                    .Single();
-                var loopCount = int.Parse(loopCountString);
-                var hash = BCrypt.Net.BCrypt.HashPassword(password, loopCount);
 
-                var dbRow = db.Configurations.Single(x => x.ConfigurationID == ConfigurationKeys.AdminPassword);
-                dbRow.ConfigurationValue = hash;
-                db.SaveChanges();
-            }
-        }
 
         /// <summary>
         /// loop through until they put in the same password twice
