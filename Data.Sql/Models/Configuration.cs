@@ -11,7 +11,8 @@ namespace Data.Sql.Models
     public enum ConfigurationKeys
     {
         RandomizationLocked = 1,
-        AdminPassword = 2
+        AdminPassword = 2,
+        BcryptLoopCount = 3
     }
 
     public class Configuration

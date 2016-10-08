@@ -43,6 +43,13 @@ namespace Data.Sql.Migrations
                 ConfigurationKey = "Admin Password Hash",
                 ConfigurationValue = "TODO: create something here"
             });
+
+            ConfigurationAddIfNotExists(context, new Models.Configuration
+            {
+                ConfigurationID = ConfigurationKeys.BcryptLoopCount,
+                ConfigurationKey = "Number of times to loop through the Bcrypt Algorithm",
+                ConfigurationValue = "10"
+            });
         }
 
         private void ConfigurationAddIfNotExists(PiiaDb db, Models.Configuration config)
