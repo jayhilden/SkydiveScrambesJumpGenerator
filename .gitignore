@@ -1,5 +1,4 @@
 ##specific to this project
-*App.config
 *.Release.config
 
 ## Ignore Visual Studio temporary files, build results, and
