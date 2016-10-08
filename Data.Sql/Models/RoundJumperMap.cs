@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Sql.Models
 {
     public class RoundJumperMap
     {
         public int ID { get; set; }
+
         public int RoundID { get; set; }
+
         [ForeignKey("UpJumper1")]
         public int UpJumper1ID { get; set; }
 
@@ -31,6 +27,9 @@ namespace Data.Sql.Models
 
         [MaxLength(100)]
         public string Camera { get; set; }
+
+        [MaxLength(1000)]
+        public string VideoUrl { get; set; }
 
         public virtual Round Round { get; set; }
         

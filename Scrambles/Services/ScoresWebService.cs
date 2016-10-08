@@ -26,7 +26,8 @@ SELECT map.ID,
 	dbo.f_JumperName(map.UpJumper1ID) jumper1, 
 	dbo.f_JumperName(map.UpJumper2ID) jumper2,
 	dbo.f_JumperName(map.DownJumper1ID) jumper3,
-	dbo.f_JumperName(map.DownJumper2ID) jumper4
+	dbo.f_JumperName(map.DownJumper2ID) jumper4,
+    map.VideoUrl
 FROM dbo.RoundJumperMap map
 ";
             return _db.SqlQuery<ScoresListRow>(query).ToList();
@@ -44,7 +45,8 @@ FROM dbo.RoundJumperMap map
                 DownJumper1 = dbRow.DownJumper1ID,
                 DownJumper2 = dbRow.DownJumper2ID,
                 UpJumper1 = dbRow.UpJumper1ID,
-                UpJumper2 = dbRow.UpJumper2ID
+                UpJumper2 = dbRow.UpJumper2ID,
+                VideoUrl = dbRow.VideoUrl
             };
             PopulateLists(editModel);
             return editModel;
@@ -95,6 +97,7 @@ FROM dbo.RoundJumperMap map
             row.DownJumper2ID = editModel.DownJumper2;
             row.UpJumper1ID = editModel.UpJumper1;
             row.UpJumper2ID = editModel.UpJumper2;
+            row.VideoUrl = editModel.VideoUrl;
             _db.SaveChanges();
         }
 

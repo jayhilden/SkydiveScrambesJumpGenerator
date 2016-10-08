@@ -25,5 +25,6 @@ namespace Scrambles.Models
         public List<SelectListItem> DownJumper2List { get; set; }
         public List<SelectListItem> UpJumper1List { get; set; }
         public List<SelectListItem> UpJumper2List { get; set; }
+        public string VideoUrl { get; set; }
     }
 }
