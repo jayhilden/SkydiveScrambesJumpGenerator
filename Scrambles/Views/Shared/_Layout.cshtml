@@ -1,4 +1,5 @@
 ﻿@using Data.Sql.Services
+@using Scrambles.Services
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +29,7 @@
                     <li>@Html.ActionLink("Results", "Results", "Scores")</li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
-                    @if ((bool?) Session[PasswordService.SessionKeyName] == true)
+                    @if (UserService.IsAdmin())
                     {
                         <li>@Html.ActionLink("Logout", "Logout", "Admin")</li>
                     }

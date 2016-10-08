@@ -6,7 +6,6 @@ namespace Data.Sql.Services
 {
     public class PasswordService
     {
-        public const string SessionKeyName = "IsAdmin";
         private readonly PiiaDb _db;
 
         public PasswordService(PiiaDb db)

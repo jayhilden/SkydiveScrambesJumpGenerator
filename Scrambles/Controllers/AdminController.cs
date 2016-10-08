@@ -1,6 +1,8 @@
 ﻿using System.Web.Mvc;
+using System.Web.Security;
 using Data.Sql.Services;
 using Scrambles.Models;
+using Scrambles.Services;
 
 namespace Scrambles.Controllers
 {
@@ -29,12 +31,14 @@ namespace Scrambles.Controllers
                 return View(new LoginModel());
             }
 
-            Session.Add(PasswordService.SessionKeyName, true);
+            FormsAuthentication.SetAuthCookie("username", true);
+            Session.Add(UserService.SessionKeyName, true);
             return Redirect("~/");
         }
 
         public ActionResult Logout()
         {
+            FormsAuthentication.SignOut();
             Session.Clear();
             return Redirect("~/");
 

@@ -10,5 +10,6 @@ namespace Scrambles.Models
     {
         public IEnumerable<Jumper> Jumpers { get; set; }
         public bool RandomizationLocked { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }

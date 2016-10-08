@@ -28,13 +28,15 @@ namespace Scrambles.Controllers
             var model = new JumperListViewModel
             {
                 Jumpers = _db.Jumpers.ToList(),
-                RandomizationLocked = _randomizationWebService.RandomizationLocked()
+                RandomizationLocked = _randomizationWebService.RandomizationLocked(),
+                IsAdmin = UserService.IsAdmin()
             };
             return View(model);
         }
 
 
         // GET: Jumpers/Create
+        [Authorize]
         public ActionResult Create()
         {
             var model = new Jumper();

@@ -171,6 +171,7 @@
     <Compile Include="Services\ExtensionMethods.cs" />
     <Compile Include="Services\RandomizationWebService.cs" />
     <Compile Include="Services\ScoresWebService.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />

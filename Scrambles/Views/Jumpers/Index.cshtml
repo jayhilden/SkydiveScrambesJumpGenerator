@@ -5,14 +5,16 @@
     ViewBag.Title = "Jumper List";
     var lockText = Model.RandomizationLocked ? "Unlock Randomization" : "Lock Randomization";
 }
-<h3 class="pull-left">
-    <a class="panel-heading label label-primary" href="@Url.Action("Create")">Add Jumper</a>
-</h3>
-<h3 class="pull-right">
-    <a class="panel-heading label label-primary" href="@Url.Action("Randomize")">Randomize</a>
-    <a class="panel-heading label label-danger" href="@Url.Action("LockUnlockRandomization", new {locked = !Model.RandomizationLocked})">@lockText</a>
-</h3>
-    
+@if (Model.IsAdmin)
+{
+    <h3 class="pull-left">
+        <a class="panel-heading label label-primary" href="@Url.Action("Create")">Add Jumper</a>
+    </h3>
+    <h3 class="pull-right">
+        <a class="panel-heading label label-primary" href="@Url.Action("Randomize")">Randomize</a>
+        <a class="panel-heading label label-danger" href="@Url.Action("LockUnlockRandomization", new {locked = !Model.RandomizationLocked})">@lockText</a>
+    </h3>
+}    
 
 <table class="table" id="table1" data-order='[[ 2, "desc" ]]'>
     <thead>
