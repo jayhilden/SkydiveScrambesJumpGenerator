@@ -18,6 +18,8 @@ namespace Scrambles.Models
         public string Jumper2 { get; set; }
         public string Jumper3 { get; set; }
         public string Jumper4 { get; set; }
+        [Display(Name = "Video")]
+        public string VideoUrl { get; set; }
 
     }
 }
