@@ -33,10 +33,16 @@ namespace Data.Sql.Migrations
         private void SeedConfiguration(PiiaDb context)
         {
             ConfigurationAddIfNotExists(context, new Models.Configuration {
-                ConfigurationID = (int)ConfigurationKeys.RandomizationLocked,
+                ConfigurationID = ConfigurationKeys.RandomizationLocked,
                 ConfigurationKey = "Randomization Locked",
                 ConfigurationValue = "1"
                 });
+            ConfigurationAddIfNotExists(context, new Models.Configuration
+            {
+                ConfigurationID = ConfigurationKeys.AdminPassword,
+                ConfigurationKey = "Admin Password Hash",
+                ConfigurationValue = "TODO: create something here"
+            });
         }
 
         private void ConfigurationAddIfNotExists(PiiaDb db, Models.Configuration config)

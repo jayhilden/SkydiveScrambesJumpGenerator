@@ -17,7 +17,7 @@ namespace Scrambles.Services
         public bool RandomizationLocked()
         {
             var value = _db.Configurations
-                .Where(x => x.ConfigurationID == (int)ConfigurationKeys.RandomizationLocked)
+                .Where(x => x.ConfigurationID == ConfigurationKeys.RandomizationLocked)
                 .Select(x=>x.ConfigurationValue)
                 .Single();
             return int.Parse(value) == 1;
@@ -26,7 +26,7 @@ namespace Scrambles.Services
         public void LockUnlockRandomization(bool locked)
         {
             var stringVal = locked ? "1" : "0";
-            var db = _db.Configurations.Single(x => x.ConfigurationID == (int) ConfigurationKeys.RandomizationLocked);
+            var db = _db.Configurations.Single(x => x.ConfigurationID == ConfigurationKeys.RandomizationLocked);
             db.ConfigurationValue = stringVal;
             _db.SaveChanges();
         }

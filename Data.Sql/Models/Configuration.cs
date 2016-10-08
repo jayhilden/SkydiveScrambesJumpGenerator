@@ -10,14 +10,15 @@ namespace Data.Sql.Models
 {
     public enum ConfigurationKeys
     {
-        RandomizationLocked = 1
+        RandomizationLocked = 1,
+        AdminPassword = 2
     }
 
     public class Configuration
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ConfigurationID { get; set; }
+        public ConfigurationKeys ConfigurationID { get; set; }
         public string ConfigurationKey { get; set; }
         public string ConfigurationValue { get; set; }
     }
