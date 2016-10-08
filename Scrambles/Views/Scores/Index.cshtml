@@ -1,4 +1,4 @@
-﻿@model System.Collections.Generic.IEnumerable<Scrambles.Models.ScoresListRow>
+﻿@model Scrambles.Models.ScoresListVM
 
 
 <div style="padding-top: 10px;">
@@ -12,23 +12,29 @@
 <table id="table1">
     <thead>
     <tr>
-        <th>Edit</th>
-        <th>@Html.DisplayNameFor(model => model.RoundNumber)</th>
-        <th>@Html.DisplayNameFor(model => model.Score)</th>
-        <th>@Html.DisplayNameFor(model => model.Jumper1)</th>
-        <th>@Html.DisplayNameFor(model => model.Jumper2)</th>
-        <th>@Html.DisplayNameFor(model => model.Jumper3)</th>
-        <th>@Html.DisplayNameFor(model => model.Jumper4)</th>
-        <th>@Html.DisplayNameFor(model => model.Camera)</th>
-        <th>@Html.DisplayNameFor(model => model.VideoUrl)</th>
+        @if (Model.IsAdmin)
+        {
+            <th>Edit</th>
+        }
+        <th>@Html.DisplayNameFor(model => model.Scores[0].RoundNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.Scores[0].Score)</th>
+        <th>@Html.DisplayNameFor(model => model.Scores[0].Jumper1)</th>
+        <th>@Html.DisplayNameFor(model => model.Scores[0].Jumper2)</th>
+        <th>@Html.DisplayNameFor(model => model.Scores[0].Jumper3)</th>
+        <th>@Html.DisplayNameFor(model => model.Scores[0].Jumper4)</th>
+        <th>@Html.DisplayNameFor(model => model.Scores[0].Camera)</th>
+        <th>@Html.DisplayNameFor(model => model.Scores[0].VideoUrl)</th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model)
+    @foreach (var item in Model.Scores)
     {
         var scoreDisplay = item.Score != null ? item.Score.ToString() : " ";
         <tr>
-            <td>@Html.ActionLink("Edit", "Edit", new {id = item.ID})</td>
+            @if (Model.IsAdmin)
+            {
+                <td>@Html.ActionLink("Edit", "Edit", new {id = item.ID})</td>
+            }
             <td>@Html.DisplayFor(model => item.RoundNumber)</td>
             <td>@scoreDisplay</td>
             <td>@Html.DisplayFor(model => item.Jumper1)</td>

@@ -4,9 +4,12 @@ using System.Net;
 using System.Web.Mvc;
 using Data.Sql;
 using Data.Sql.Models;
+using Scrambles.Models;
+using Scrambles.Services;
 
 namespace Scrambles.Controllers
 {
+    [Authorize]
     public class RoundsController : Controller
     {
         private readonly PiiaDb _db;
@@ -16,10 +19,15 @@ namespace Scrambles.Controllers
             _db = db;
         }
 
-        // GET: Rounds
+        [AllowAnonymous]
         public ActionResult Index()
         {
-            return View(_db.Rounds.ToList());
+            var vm = new RoundListVM
+            {
+                Rounds = _db.Rounds.ToList(),
+                IsAdmin = UserService.IsAdmin()
+            };
+            return View(vm);
         }
 
         // GET: Rounds/Details/5
@@ -29,7 +37,7 @@ namespace Scrambles.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Round round = _db.Rounds.Find(id);
+            var round = _db.Rounds.Find(id);
             if (round == null)
             {
                 return HttpNotFound();

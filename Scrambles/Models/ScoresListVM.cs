@@ -6,6 +6,12 @@ using System.Web;
 
 namespace Scrambles.Models
 {
+    public class ScoresListVM
+    {
+        public List<ScoresListRow> Scores { get; set; }
+        public bool IsAdmin { get; set; }
+    }
+
     public class ScoresListRow
     {
         public int ID { get; set; }

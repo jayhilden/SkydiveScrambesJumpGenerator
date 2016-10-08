@@ -10,6 +10,7 @@ using Scrambles.Services;
 
 namespace Scrambles.Controllers
 {
+    [Authorize]
     public class JumpersController : Controller
     {
         private readonly PiiaDb _db;
@@ -22,19 +23,21 @@ namespace Scrambles.Controllers
         }
 
 
-        // GET: Jumpers
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var model = new JumperListViewModel
             {
                 Jumpers = _db.Jumpers.ToList(),
-                RandomizationLocked = _randomizationWebService.RandomizationLocked()
+                RandomizationLocked = _randomizationWebService.RandomizationLocked(),
+                IsAdmin = UserService.IsAdmin()
             };
             return View(model);
         }
 
 
         // GET: Jumpers/Create
+        
         public ActionResult Create()
         {
             var model = new Jumper();

@@ -1,5 +1,5 @@
 ##specific to this project
-Data.Sql/App.config
+*App.config
 Scrambles/Web.config
 Scrambles/Web.Release.config
 

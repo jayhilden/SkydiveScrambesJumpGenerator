@@ -5,6 +5,7 @@ using Scrambles.Services;
 
 namespace Scrambles.Controllers
 {
+    [Authorize]
     public class ScoresController : Controller
     {
         private readonly ScoresWebService _scoresWebService;
@@ -14,11 +15,11 @@ namespace Scrambles.Controllers
             _scoresWebService = scoresWebService;
         }
 
-        // GET: Scores
+        [AllowAnonymous]
         public ActionResult Index()
         {
-            var list = _scoresWebService.GetList();
-            return View(list);
+            var vm = _scoresWebService.GetScoreListVM();
+            return View(vm);
         }
 
         public ActionResult Edit(int id)
@@ -57,6 +58,7 @@ namespace Scrambles.Controllers
             return View(editModel);
         }
 
+        [AllowAnonymous]
         public ActionResult Results()
         {
             var data = _scoresWebService.GetResultsViewModel();

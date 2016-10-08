@@ -6,10 +6,9 @@ using Data.Sql.Models;
 
 namespace Scrambles.Models
 {
-    public class JumperListViewModel
+    public class RoundListVM
     {
-        public IEnumerable<Jumper> Jumpers { get; set; }
-        public bool RandomizationLocked { get; set; }
+        public List<Round> Rounds { get; set; }
         public bool IsAdmin { get; set; }
     }
 }
