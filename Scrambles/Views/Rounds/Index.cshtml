@@ -22,7 +22,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Rounds[0].Formations)
         </th>
-        <th></th>
+        <th></th> 
     </tr>
 
 @foreach (var item in Model.Rounds) {
@@ -30,7 +30,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.RoundNumber)
         </td>
-        <td>
+        <td style="white-space: nowrap">
             @Html.DisplayFor(modelItem => item.Formations)
         </td>
        
