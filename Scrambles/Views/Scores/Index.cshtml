@@ -4,8 +4,8 @@
 <div style="padding-top: 10px;">
     <h3>
         <span>
-            <a class="panel-heading label label-primary" href="#showAll">Show All</a>
-            <a class="panel-heading label label-primary" href="#showEmpty">Show Empty</a>
+            <a class="label label-primary" href="#showAll">Show All</a>
+            <a class="label label-primary" href="#showEmpty">Show Empty</a>
         </span>
     </h3>
 </div>
@@ -17,13 +17,13 @@
             <th>Edit</th>
         }
         <th>@Html.DisplayNameFor(model => model.Scores[0].RoundNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.Scores[0].VideoUrl)</th>
         <th>@Html.DisplayNameFor(model => model.Scores[0].Score)</th>
         <th>@Html.DisplayNameFor(model => model.Scores[0].Jumper1)</th>
         <th>@Html.DisplayNameFor(model => model.Scores[0].Jumper2)</th>
         <th>@Html.DisplayNameFor(model => model.Scores[0].Jumper3)</th>
         <th>@Html.DisplayNameFor(model => model.Scores[0].Jumper4)</th>
         <th>@Html.DisplayNameFor(model => model.Scores[0].Camera)</th>
-        <th>@Html.DisplayNameFor(model => model.Scores[0].VideoUrl)</th>
     </tr>
     </thead>
     <tbody>
@@ -36,18 +36,18 @@
                 <td>@Html.ActionLink("Edit", "Edit", new {id = item.ID})</td>
             }
             <td>@Html.DisplayFor(model => item.RoundNumber)</td>
-            <td>@scoreDisplay</td>
-            <td>@Html.DisplayFor(model => item.Jumper1)</td>
-            <td>@Html.DisplayFor(model => item.Jumper2)</td>
-            <td>@Html.DisplayFor(model => item.Jumper3)</td>
-            <td>@Html.DisplayFor(model => item.Jumper4)</td>
-            <td>@Html.DisplayFor(model => item.Camera)</td>
             <td>
                 @if (item.VideoUrl != null)
                 {
                     <a href="@item.VideoUrl" target="_blank">Video!</a>
                 }
             </td>
+            <td>@scoreDisplay</td>
+            <td>@Html.DisplayFor(model => item.Jumper1)</td>
+            <td>@Html.DisplayFor(model => item.Jumper2)</td>
+            <td>@Html.DisplayFor(model => item.Jumper3)</td>
+            <td>@Html.DisplayFor(model => item.Jumper4)</td>
+            <td>@Html.DisplayFor(model => item.Camera)</td>            
         </tr>
     }
     </tbody>
