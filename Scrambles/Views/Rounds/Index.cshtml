@@ -7,9 +7,9 @@
 
 @if (Model.IsAdmin)
 {
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+    <h3 class="pull-left">
+        <a class="panel-heading label label-primary" href="@Url.Action("Create")">Add Round</a>
+    </h3>
 }
 <table class="table">
     <tr>
