@@ -11,4 +11,4 @@ assembly_info:
   assembly_file_version: '$(releaseVersion).{build}'
   assembly_informational_version: '{version}'
 before_build:
-  - nuget restore
+  - nuget restore src/Scrambles.sln
