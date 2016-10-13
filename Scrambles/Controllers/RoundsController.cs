@@ -24,7 +24,7 @@ namespace Scrambles.Controllers
         {
             var vm = new RoundListVM
             {
-                Rounds = _db.Rounds.OrderBy(x=>x.RoundID).ToList(),
+                Rounds = _db.Rounds.OrderBy(x=>x.RoundNumber).ToList(),
                 IsAdmin = UserService.IsAdmin()
             };
             return View(vm);
