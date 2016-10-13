@@ -1,7 +1,8 @@
 ﻿@model string
 
 @{
-    const string imageSize = "200px";
+    const string imgHeight = "200px";
+    string imgWidth;
 }
            
 @foreach (var i in Model.Split(','))
@@ -16,11 +17,11 @@
     }
     if (isBlock)
     {
-        throw new NotImplementedException("TODO: get block images");
+        imgSource = Url.Content("~/Content/Images/blocks/" + upper + ".png");
     }
     else
     {
-        imgSource = @Url.Content("~/Content/Images/randoms/random" + upper + ".jpg");
+        imgSource = Url.Content("~/Content/Images/randoms/random" + upper + ".jpg");
     }
-    <img src="@imgSource" alt="@upper" width="@imageSize" height="@imageSize" />
+    <img src="@imgSource" alt="@upper" height="@imgHeight" />
 }
