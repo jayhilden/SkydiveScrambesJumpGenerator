@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Scrambles\Web.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Sql", "Data.Sql\Data.Sql.csproj", "{DCEBC1A2-E0FF-4DE4-B8A3-A06CC5E0B732}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasswordHasher", "src\PasswordHasher\PasswordHasher.csproj", "{018EACC3-63BB-4DD0-BB8E-4F8C3F321282}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasswordHasher", "PasswordHasher\PasswordHasher.csproj", "{018EACC3-63BB-4DD0-BB8E-4F8C3F321282}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
