@@ -13,13 +13,13 @@ namespace Scrambles.Models
         public int? Score { get; set; }
         public string Camera { get; set; }
 
-        [DisplayName("Jumper 1")]
+        [DisplayName("Down Jumper 1")]
         public int DownJumper1 { get; set; }
-        [DisplayName("Jumper 2")]
+        [DisplayName("Down Jumper 2")]
         public int DownJumper2 { get; set; }
-        [DisplayName("Jumper 3")]
+        [DisplayName("Up Jumper 3")]
         public int UpJumper1 { get; set; }
-        [DisplayName("Jumper 4")]
+        [DisplayName("Up Jumper 4")]
         public int UpJumper2 { get; set; }
         public List<SelectListItem> DownJumper1List { get; set; }
         public List<SelectListItem> DownJumper2List { get; set; }

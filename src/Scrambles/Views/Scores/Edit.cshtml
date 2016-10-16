@@ -28,6 +28,22 @@
                 @Html.ValidationMessageFor(model => model.Camera, "", new { @class = "text-danger" })
             </div>
         </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.UpJumper1, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.UpJumper1, Model.UpJumper1List)
+                @Html.ValidationMessageFor(model => model.UpJumper1, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UpJumper2, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.UpJumper2, Model.UpJumper2List)
+                @Html.ValidationMessageFor(model => model.UpJumper2, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.DownJumper1, htmlAttributes: new {@class = "control-label col-md-2"})
@@ -45,21 +61,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpJumper1, htmlAttributes: new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.DropDownListFor(x => x.UpJumper1, Model.UpJumper1List)
-                @Html.ValidationMessageFor(model => model.UpJumper1, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpJumper2, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(x => x.UpJumper2, Model.UpJumper2List)
-                @Html.ValidationMessageFor(model => model.UpJumper2, "", new { @class = "text-danger" })
-            </div>
-        </div>
         
         <div class="form-group">
             @Html.LabelFor(model => model.VideoUrl, htmlAttributes: new { @class = "control-label col-md-2" })
