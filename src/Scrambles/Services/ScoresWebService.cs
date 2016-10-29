@@ -20,7 +20,7 @@ namespace Scrambles.Services
         {
             const string query = @"
 SELECT map.ID, 
-    map.RoundID roundNumber, 
+    r.RoundNumber, 
     map.score, 
     map.camera,
 	dbo.f_JumperName(map.UpJumper1ID) jumper1, 
@@ -29,6 +29,7 @@ SELECT map.ID,
 	dbo.f_JumperName(map.DownJumper2ID) jumper4,
     map.VideoUrl
 FROM dbo.RoundJumperMap map
+	INNER JOIN dbo.Round R ON (R.RoundID = map.RoundID)
 ";
             var scores = _db.SqlQuery<ScoresListRow>(query).ToList();
             return new ScoresListVM
