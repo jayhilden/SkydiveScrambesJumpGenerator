@@ -1,4 +1,8 @@
 ﻿@model Scrambles.Models.ScoresListVM
+@{
+    var scoreColumnIndex = Model.IsAdmin ? 3 : 2;
+    var sortOffset = Model.IsAdmin ? 1 : 0;
+}
 
 
 <div style="padding-top: 10px;">
@@ -57,10 +61,11 @@
     <script type="text/javascript">
         var dataTable;
         $(document).ready(function() {
+            var sortOffset = @sortOffset;
             dataTable = $('#table1').DataTable({
                 paging: false,
                 searching: true,
-                order: [[1, "asc"], [2, "asc"]]
+                order: [[0 + sortOffset, "asc"], [2 + sortOffset, "asc"]]
             });
             showHideEmpty();
         });
@@ -70,13 +75,14 @@
         });
 
         function showHideEmpty() {
+            var colIndex = @scoreColumnIndex;
             if (location.hash === "#showAll") {
                 console.log('show all');
-                dataTable.column(2).search('').draw();
+                dataTable.column(colIndex).search('').draw();
             }
             else if (location.hash === "#showEmpty") {
                 console.log('show empty');
-                dataTable.column(2).search('^\s*$', true, false).draw();
+                dataTable.column(colIndex).search('^\s*$', true, false).draw();
             }
         }
     </script>
