@@ -65,6 +65,7 @@
             dataTable = $('#table1').DataTable({
                 paging: false,
                 searching: true,
+                stateSave: true,
                 order: [[0 + sortOffset, "asc"], [2 + sortOffset, "asc"]]
             });
             showHideEmpty();
