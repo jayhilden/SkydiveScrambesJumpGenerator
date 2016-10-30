@@ -18,7 +18,7 @@
 When you print the draw it automatically prints one per page.  
 Each page can be split in half, one half for manifest, one half for the camera person.
 
-![Printable Draw](docs/img/printabledraw.png)
+![Printable Draw](docs/img/printableDraw.png)
 
 # View scores
 ![Scores](docs/img/scores.png)
