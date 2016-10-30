@@ -8,21 +8,22 @@
 - Track scores
 - Link to the videos
 
-### Add jumpers
+# Add jumpers
 ![Jumpers](docs/img/jumpers.png)
 
-### Create a draw
+# Create a draw
 ![Draw](docs/img/draw.png)
 
-### Print the draw for manifest and the camera person
+# Print the draw for manifest and the camera person
 When you print the draw it automatically prints one per page.  
 Each page can be split in half, one half for manifest, one half for the camera person.
+
 ![Printable Draw](docs/img/printabledraw.png)
 
-### View scores
+# View scores
 ![Scores](docs/img/scores.png)
 
-### Admins can enter Scores
+# Admins can enter Scores
 When entering scores you can add:
 - Round Scores
 - Camera person
@@ -32,11 +33,11 @@ You can also edit the jumpers.  This is very useful because often a jumper may d
 
 ![Enter Scores](docs/img/scores_edit.png)
 
-### View Results
+# View Results
 ![Results](docs/img/results.png)
 
-### View Results On Mobile
+# View Results On Mobile
 ![Results](docs/img/results_mobile.png)
 
-### Menu Support on Mobile
+# Menu Support on Mobile
 ![Menu](docs/img/menu_mobile.png)
