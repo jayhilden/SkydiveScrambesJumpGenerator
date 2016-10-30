@@ -8,22 +8,22 @@
 - Track scores
 - Link to the videos
 
-# Add jumpers
+# Add Jumpers
 ![Jumpers](docs/img/jumpers.png)
 
-# Create a draw
+# Create a Draw
 ![Draw](docs/img/draw.png)
 
-# Print the draw for manifest and the camera person
+# Print the Draw for Manifest and the Camera Person
 When you print the draw it automatically prints one per page.  
 Each page can be split in half, one half for manifest, one half for the camera person.
 
 ![Printable Draw](docs/img/printableDraw.png)
 
-# View scores
+# View Scores
 ![Scores](docs/img/scores.png)
 
-# Admins can enter Scores
+# Admins Can Enter Scores
 When entering scores you can add:
 - Round Scores
 - Camera person
@@ -36,7 +36,8 @@ You can also edit the jumpers.  This is very useful because often a jumper may d
 # View Results
 ![Results](docs/img/results.png)
 
-# View Results On Mobile
+# Realtime Results On Mobile
+The scrambles participants love to view their scores in real time.  With this site they can, just send them a link to the results screen and it will automatically be responsive on their mobile device.
 ![Results](docs/img/results_mobile.png)
 
 # Menu Support on Mobile
