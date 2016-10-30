@@ -9,6 +9,29 @@ namespace Data.Sql.Migrations
         {
             AddColumn("dbo.RoundJumperMap", "Score", c => c.Int());
             AddColumn("dbo.RoundJumperMap", "Camera", c => c.String(maxLength: 100));
+            var provider = this.GetProvider();
+            switch (provider)
+            {
+                case DbMigrationExtensions.ProviderTypesEnum.SqlServer:
+                    CreateFunctionInSqlServer();
+                    break;
+                case DbMigrationExtensions.ProviderTypesEnum.MySQL:
+                    CreateFunctionInMySQL();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+        
+        public override void Down()
+        {
+            DropColumn("dbo.RoundJumperMap", "Camera");
+            DropColumn("dbo.RoundJumperMap", "Score");
+            Sql("DROP FUNCTION f_JumperName");
+        }
+
+        private void CreateFunctionInSqlServer()
+        {
             Sql(@"
 -- =============================================
 -- Author:		Jay Hilden
@@ -32,12 +55,31 @@ BEGIN
 END
 ");
         }
-        
-        public override void Down()
+
+        private void CreateFunctionInMySQL()
         {
-            DropColumn("dbo.RoundJumperMap", "Camera");
-            DropColumn("dbo.RoundJumperMap", "Score");
-            Sql("DROP FUNCTION f_JumperName");
+            Sql(@"
+DROP function IF EXISTS `f_JumperName`;
+
+DELIMITER $$
+CREATE FUNCTION f_JumperName 
+(
+	JumperID int
+)
+RETURNS varchar(500)
+BEGIN
+    DECLARE result VARCHAR(500);
+    
+	SELECT j.LastName + ', ' + j.FirstName
+    INTO result
+	FROM Jumper j
+	WHERE j.JumperID = JumperID;
+
+	RETURN x;
+END$$
+
+DELIMITER ;
+");
         }
     }
 }
