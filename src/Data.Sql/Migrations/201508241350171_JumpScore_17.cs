@@ -58,28 +58,21 @@ END
 
         private void CreateFunctionInMySQL()
         {
-            Sql(@"
-DROP function IF EXISTS `f_JumperName`;
+            Sql(@"DROP function IF EXISTS `f_JumperName`;");
+            Sql(@"CREATE FUNCTION `f_JumperName` 
+        (
+            JumperID int
+        )
+        RETURNS varchar(500)
+        BEGIN
+            DECLARE result VARCHAR(500);
+            SELECT j.LastName + ', ' + j.FirstName
+            INTO result
+            FROM Jumper j
+            WHERE j.JumperID = JumperID;
 
-DELIMITER $$
-CREATE FUNCTION f_JumperName 
-(
-	JumperID int
-)
-RETURNS varchar(500)
-BEGIN
-    DECLARE result VARCHAR(500);
-    
-	SELECT j.LastName + ', ' + j.FirstName
-    INTO result
-	FROM Jumper j
-	WHERE j.JumperID = JumperID;
-
-	RETURN x;
-END$$
-
-DELIMITER ;
-");
+            RETURN x;
+        END;");
         }
     }
 }
