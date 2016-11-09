@@ -16,11 +16,9 @@ namespace Data.Sql.Models
 
         [Required]
         [UIHint("FormationImages")]//this is bastadizing the viewmodel and the repo model, in production code this would be broken out
+        [MaxLength(100)]
         public string Formations { get; set; }
 
-        public IEnumerable<string> FormationsSplit
-        {
-            get { return Formations.Split(','); }
-        }
+        public IEnumerable<string> FormationsSplit => Formations.Split(',');
     }
 }

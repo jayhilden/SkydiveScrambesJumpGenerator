@@ -20,7 +20,11 @@ namespace Data.Sql.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public ConfigurationKeys ConfigurationID { get; set; }
+
+        [MaxLength(100)]
         public string ConfigurationKey { get; set; }
+
+        [MaxLength(100)]
         public string ConfigurationValue { get; set; }
     }
 }

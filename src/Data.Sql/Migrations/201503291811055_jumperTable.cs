@@ -12,12 +12,12 @@ namespace Data.Sql.Migrations
                 c => new
                     {
                         JumperID = c.Int(nullable: false, identity: true),
-                        FirstName = c.String(nullable: false),
-                        LastName = c.String(nullable: false),
+                        FirstName = c.String(nullable: false, maxLength: 100),
+                        LastName = c.String(nullable: false, maxLength: 100),
                         NumberOfJumps = c.Int(nullable: false),
                         Organizer = c.Boolean(nullable: false),
                         Paid = c.Boolean(nullable: false),
-                        Comment = c.String(),
+                        Comment = c.String(maxLength: 1000),
                         RandomizedUpDown = c.Int(),
                         RandomizedLetter = c.String(maxLength: 1),
                     })

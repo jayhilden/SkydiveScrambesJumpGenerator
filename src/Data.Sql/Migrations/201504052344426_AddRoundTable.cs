@@ -13,7 +13,7 @@ namespace Data.Sql.Migrations
                     {
                         RoundID = c.Int(nullable: false, identity: true),
                         RoundNumber = c.Int(nullable: false),
-                        Formations = c.String(nullable: false),
+                        Formations = c.String(nullable: false, maxLength: 100),
                     })
                 .PrimaryKey(t => t.RoundID);
             

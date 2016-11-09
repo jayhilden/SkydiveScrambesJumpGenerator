@@ -12,8 +12,8 @@ namespace Data.Sql.Migrations
                 c => new
                     {
                         ConfigurationID = c.Int(nullable: false),
-                        ConfigurationKey = c.String(),
-                        ConfigurationValue = c.String(),
+                        ConfigurationKey = c.String(maxLength: 100),
+                        ConfigurationValue = c.String(maxLength: 100),
                     })
                 .PrimaryKey(t => t.ConfigurationID);
             

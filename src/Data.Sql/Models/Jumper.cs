@@ -31,10 +31,12 @@ namespace Data.Sql.Models
 
         [Required]
         [DisplayName("First Name")]
+        [MaxLength(100)]
         public string FirstName { get; set; }
 
         [Required]
         [DisplayName("Last Name")]
+        [MaxLength(100)]
         public string LastName { get; set; }
 
         [DisplayName("# of Jumps")]
@@ -46,6 +48,7 @@ namespace Data.Sql.Models
         [DisplayName("Has this jumper paid?")]
         public bool Paid { get; set; }
 
+        [MaxLength(1000)]
         public string Comment { get; set; }
 
         [DisplayName("Randomized into Up/Down jumper group")]
