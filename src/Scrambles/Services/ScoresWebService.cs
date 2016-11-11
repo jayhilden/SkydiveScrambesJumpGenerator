@@ -23,13 +23,13 @@ SELECT map.ID,
     r.RoundNumber, 
     map.score, 
     map.camera,
-	dbo.f_JumperName(map.UpJumper1ID) jumper1, 
-	dbo.f_JumperName(map.UpJumper2ID) jumper2,
-	dbo.f_JumperName(map.DownJumper1ID) jumper3,
-	dbo.f_JumperName(map.DownJumper2ID) jumper4,
+	f_JumperName(map.UpJumper1ID) jumper1, 
+	f_JumperName(map.UpJumper2ID) jumper2,
+	f_JumperName(map.DownJumper1ID) jumper3,
+	f_JumperName(map.DownJumper2ID) jumper4,
     map.VideoUrl
-FROM dbo.RoundJumperMap map
-	INNER JOIN dbo.Round R ON (R.RoundID = map.RoundID)
+FROM RoundJumperMap map
+	INNER JOIN Round R ON (R.RoundID = map.RoundID)
 ";
             var scores = _db.SqlQuery<ScoresListRow>(query).ToList();
             return new ScoresListVM
@@ -112,8 +112,8 @@ FROM dbo.RoundJumperMap map
         {
             const string sql = @"
 SELECT j.FirstName + ' ' + j.LastName Name, ISNULL(SUM(Score), 0) TotalScore, COUNT(m.ID) TotalJumps
-FROM dbo.Jumper j
-	LEFT OUTER JOIN dbo.RoundJumperMap m  ON (
+FROM Jumper j
+	LEFT OUTER JOIN RoundJumperMap m  ON (
 			m.UpJumper1ID = j.JumperID
 			OR m.UpJumper2ID = j.JumperID
 			OR m.DownJumper1ID = j.JumperID

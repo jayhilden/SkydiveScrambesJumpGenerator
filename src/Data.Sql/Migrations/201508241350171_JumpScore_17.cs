@@ -66,12 +66,12 @@ END
         RETURNS varchar(500)
         BEGIN
             DECLARE result VARCHAR(500);
-            SELECT j.LastName + ', ' + j.FirstName
+            SELECT CONCAT(j.LastName, ', ', j.FirstName)
             INTO result
             FROM Jumper j
             WHERE j.JumperID = JumperID;
 
-            RETURN x;
+            RETURN result;
         END;");
         }
     }
