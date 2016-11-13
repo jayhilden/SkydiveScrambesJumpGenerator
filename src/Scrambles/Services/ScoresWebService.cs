@@ -29,7 +29,7 @@ SELECT map.ID,
 	f_JumperName(map.DownJumper2ID) jumper4,
     map.VideoUrl
 FROM RoundJumperMap map
-	INNER JOIN Round R ON (R.RoundID = map.RoundID)
+	INNER JOIN Round r ON (r.RoundID = map.RoundID)
 ";
             var scores = _db.SqlQuery<ScoresListRow>(query).ToList();
             return new ScoresListVM
