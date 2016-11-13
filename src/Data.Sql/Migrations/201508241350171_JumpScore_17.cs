@@ -9,7 +9,7 @@ namespace Data.Sql.Migrations
         {
             AddColumn("dbo.RoundJumperMap", "Score", c => c.Int());
             AddColumn("dbo.RoundJumperMap", "Camera", c => c.String(maxLength: 100));
-            var provider = this.GetProvider();
+            var provider = DbMigrationExtensions.GetProvider();
             switch (provider)
             {
                 case DbMigrationExtensions.ProviderTypesEnum.SqlServer:

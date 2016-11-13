@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Data.Sql
 {
-    internal static class DbMigrationExtensions
+    public static class DbMigrationExtensions
     {
         public enum ProviderTypesEnum
         {
             SqlServer,
             MySQL
         }
-        public static ProviderTypesEnum GetProvider(this DbMigration migration)
+        public static ProviderTypesEnum GetProvider()
         {
             var providerName = ConfigurationManager.ConnectionStrings["piia"].ProviderName;
             return providerName.ToLower().Contains("mysql") ? ProviderTypesEnum.MySQL : ProviderTypesEnum.SqlServer;

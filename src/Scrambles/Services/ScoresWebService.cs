@@ -110,8 +110,10 @@ FROM RoundJumperMap map
 
         internal IEnumerable<ResultsListRow> GetResultsList(UpDownFlag upDown)
         {
-            const string sql = @"
-SELECT j.FirstName + ' ' + j.LastName Name, ISNULL(SUM(Score), 0) TotalScore, COUNT(m.ID) TotalJumps
+            var provider = DbMigrationExtensions.GetProvider();
+            var dboPrefix = provider == DbMigrationExtensions.ProviderTypesEnum.SqlServer ? "dbo." : "";
+            var sql = $@"
+SELECT {dboPrefix}f_JumperName(j.JumperID) Name, COALESCE(SUM(Score), 0) TotalScore, COUNT(m.ID) TotalJumps
 FROM Jumper j
 	LEFT OUTER JOIN RoundJumperMap m  ON (
 			m.UpJumper1ID = j.JumperID
@@ -119,7 +121,7 @@ FROM Jumper j
 			OR m.DownJumper1ID = j.JumperID
 			OR m.DownJumper2ID = j.JumperID)
 WHERE j.RandomizedUpDown = @p0
-GROUP BY j.FirstName + ' ' + j.LastName";
+GROUP BY {dboPrefix}f_JumperName(j.JumperID)";
             return _db.SqlQuery<ResultsListRow>(sql, (int) upDown);
         }
 
