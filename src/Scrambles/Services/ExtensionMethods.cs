@@ -13,9 +13,11 @@ public static class ExtensionMethods
         return char.ConvertFromUtf32(index + 'A');
     }
 
-    public static IList<T> Clone<T>(this IList<T> listToClone) where T : ICloneable
+    public static List<T> Clone<T>(this IList<T> listToClone)
     {
-        return listToClone.Select(item => (T)item.Clone()).ToList();
+        var newList = new List<T>(listToClone.Count);
+        newList.AddRange(listToClone.Select(i => i));
+        return newList;
     }
 
     /// <summary>

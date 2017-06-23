@@ -128,72 +128,104 @@ namespace Scrambles.Services
             }
             var up = jumpers.Where(x => x.RandomizedUpDown == UpDownFlag.UpJumper).OrderByDescending(x => x.NumberOfJumps).ToList();
             var down = jumpers.Where(x => x.RandomizedUpDown == UpDownFlag.DownJumper).OrderByDescending(x => x.NumberOfJumps).ToList();
-            LinkedList<Jumper> a, b, c, d;
-            AddJumpersToLinkedLists(up, out a, out b);
-            AddJumpersToLinkedLists(down, out c, out d);
+            var upCombinations = GetCombinationPairs(up);
+            var downCombinations = GetCombinationPairs(down);
+            var startIndex = 0;
+            //LinkedList<Jumper> a, b, c, d;
+            //AddJumpersToLinkedLists(up, out a, out b);
+            //AddJumpersToLinkedLists(down, out c, out d);
 
-            var teamCount = a.Count;
-            var aStart = a.First;
-            var bStart = b.First;
-            var cStart = c.First;
-            var dStart = d.First;
+            //var teamCount = up.Count / 2;
+            //var upStart = upCombinations.First;
+            //var downStart = downCombinations.First;
+            //var aStart = a.First;
+            //var bStart = b.First;
+            //var cStart = c.First;
+            //var dStart = d.First;
             foreach (var round in _db.Rounds.OrderBy(x => x.RoundNumber))
             {
-                bStart = bStart.NextOrFirst();//+1
-                cStart = cStart.NextOrFirst().NextOrFirst();//+2
-                dStart = dStart.NextOrFirst().NextOrFirst().NextOrFirst();//+3
-                AssignNumbersToRound(round, group, teamCount, aStart, bStart, cStart, dStart);
+                var upLL = new LinkedList<Tuple<Jumper, Jumper>>(upCombinations.Clone());
+                var downLL = new LinkedList<Tuple<Jumper, Jumper>>(downCombinations.Clone());
+                var upNode = upLL.First;
+                var downNode = downLL.First;
+                for (var i = 0; i < startIndex; i++)
+                {
+                    upNode = upNode.Next;
+                    downNode = downNode.Next;
+                }
+                AssignJumpersToRounds(round, group, upNode, downNode);
+                startIndex++;
+                //upStart = upStart.NextOrFirst();
+                //downStart = downStart.NextOrFirst();
+                //bStart = bStart.NextOrFirst();//+1
+                //cStart = cStart.NextOrFirst().NextOrFirst();//+2
+                //dStart = dStart.NextOrFirst().NextOrFirst().NextOrFirst();//+3
+                //AssignNumbersToRound(round, group, teamCount, aStart, bStart, cStart, dStart);
+
             }
             _db.SaveChanges();
         }
 
-
-
-
-        /// <summary>
-        /// Assign 2 up jumpers and 2 down jumpers to a team
-        /// </summary>
-        private void AssignNumbersToRound(Round r, JumpGroupFlag leftRight, int teamCount, LinkedListNode<Jumper> up1, LinkedListNode<Jumper> up2, LinkedListNode<Jumper> down1, LinkedListNode<Jumper> down2)
+        private void AssignJumpersToRounds(Round r, JumpGroupFlag leftRight, LinkedListNode<Tuple<Jumper, Jumper>> upNode, LinkedListNode<Tuple<Jumper, Jumper>> downNode)
         {
-            for(var i = 0; i<teamCount;i++)
+            while (upNode != null)
             {
-                var nextUp1 = up1.Value;
-                var nextUp2 = up2.Value;
-                var nextDown1 = down1.Value;
-                var nextDown2 = down2.Value;
                 var map = new RoundJumperMap
                 {
                     RoundID = r.RoundID,
-                    UpJumper1ID = nextUp1.JumperID,
-                    UpJumper2ID = nextUp2.JumperID,
-                    DownJumper1ID = nextDown1.JumperID,
-                    DownJumper2ID = nextDown2.JumperID,
+                    UpJumper1ID = upNode.Value.Item1.JumperID,
+                    UpJumper2ID = upNode.Value.Item2.JumperID,
+                    DownJumper1ID = downNode.Value.Item1.JumperID,
+                    DownJumper2ID = downNode.Value.Item2.JumperID,
                     JumpGroup = leftRight
                 };
                 _db.RoundJumperMaps.Add(map);
-                up1 = up1.NextOrFirst();
-                up2 = up2.NextOrFirst();
-                down1 = down1.NextOrFirst();
-                down2 = down2.NextOrFirst();
+                upNode = RemoveAlreadyUsedJumpers(upNode);
+                downNode = RemoveAlreadyUsedJumpers(downNode);
             }            
         }
 
-        private static void AddJumpersToLinkedLists(List<Jumper> jumpers, out LinkedList<Jumper> even, out LinkedList<Jumper> odd)
+        private static LinkedListNode<Tuple<Jumper, Jumper>> RemoveAlreadyUsedJumpers(LinkedListNode<Tuple<Jumper, Jumper>> upCombinations)
         {
-            odd = new LinkedList<Jumper>();
-            even = new LinkedList<Jumper>();
-            for (var i = 0; i < jumpers.Count; i++)
+            var left = upCombinations.Value.Item1;
+            var right = upCombinations.Value.Item2;
+            var list = upCombinations.List;
+            var itemsToRemove = list.Where(tuple => tuple.Item1 == left || tuple.Item1 == right || tuple.Item2 == left || tuple.Item2 == right).ToList();
+            foreach (var toRemove in itemsToRemove)
             {
-                var jumper = jumpers[i];
-                if (i % 2 == 0)
-                {
-                    even.AddLast(jumper);
-                }
-                else
-                {
-                    odd.AddLast(jumper);
-                }
+                list.Remove(toRemove);
             }
+            return list.First;
+        }
+
+        //private static void AddJumpersToLinkedLists(List<Jumper> jumpers, out LinkedList<Jumper> even, out LinkedList<Jumper> odd)
+        //{
+        //    odd = new LinkedList<Jumper>();
+        //    even = new LinkedList<Jumper>();
+        //    for (var i = 0; i < jumpers.Count; i++)
+        //    {
+        //        var jumper = jumpers[i];
+        //        if (i % 2 == 0)
+        //        {
+        //            even.AddLast(jumper);
+        //        }
+        //        else
+        //        {
+        //            odd.AddLast(jumper);
+        //        }
+        //    }
+        //}
+
+        private static List<Tuple<T, T>> GetCombinationPairs<T>(List<T> list)
+        {
+            var tuples = list
+                .Select((value, index) => new {value, index})
+                .SelectMany(x =>
+                        list.Skip(x.index + 1),
+                    (x, y) => Tuple.Create(x.value, y)
+                );
+            //return new LinkedList<Tuple<T, T>>(tuples);
+            return tuples.ToList();
         }
 
         #endregion
