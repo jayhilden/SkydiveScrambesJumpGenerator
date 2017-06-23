@@ -119,7 +119,7 @@ namespace Scrambles.Services
         }
 
 
-        private void AssignJumpersToRounds(JumpGroupFlag group)
+        internal void AssignJumpersToRounds(JumpGroupFlag group)
         {
             var jumpers = _db.Jumpers.Where(x => x.JumpGroup == group);
             if (!jumpers.Any())
