@@ -12,10 +12,10 @@ namespace Data.Sql
 {
     public class PiiaDb : DbContext
     {
-        public DbSet<Jumper> Jumpers { get; set; }
-        public DbSet<Round> Rounds { get; set; }
-        public DbSet<RoundJumperMap> RoundJumperMaps { get; set; }
-        public DbSet<Configuration> Configurations { get; set; }
+        public virtual DbSet<Jumper> Jumpers { get; set; }
+        public virtual DbSet<Round> Rounds { get; set; }
+        public virtual DbSet<RoundJumperMap> RoundJumperMaps { get; set; }
+        public virtual DbSet<Configuration> Configurations { get; set; }
 
         static PiiaDb()
         {
