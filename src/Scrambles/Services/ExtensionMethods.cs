@@ -8,6 +8,7 @@ using System.Web.Mvc;
 // ReSharper disable once CheckNamespace
 public static class ExtensionMethods
 {
+    private static Random randomGenerator = new Random(DateTime.Now.Millisecond);
     public static string IntToLetter(this int index)
     {
         return char.ConvertFromUtf32(index + 'A');
@@ -26,12 +27,12 @@ public static class ExtensionMethods
     /// <typeparam name="T"></typeparam>
     /// <param name="list"></param>
     /// <returns></returns>
-    public static IEnumerable<T> Shuffle<T>(this IList<T> list, Random rng)
+    public static IEnumerable<T> Shuffle<T>(this IList<T> list)
     {
         var choices = Enumerable.Range(0, list.Count).ToList();
         for (var n = choices.Count; n > 1; n--)
         {
-            var k = rng.Next(n);
+            var k = randomGenerator.Next(n);
             yield return list[choices[k]];
             choices.RemoveAt(k);
         }

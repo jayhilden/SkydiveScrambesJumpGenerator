@@ -131,17 +131,7 @@ namespace Scrambles.Services
             var upCombinations = GetCombinationPairs(up);
             var downCombinations = GetCombinationPairs(down);
             var startIndex = 0;
-            //LinkedList<Jumper> a, b, c, d;
-            //AddJumpersToLinkedLists(up, out a, out b);
-            //AddJumpersToLinkedLists(down, out c, out d);
 
-            //var teamCount = up.Count / 2;
-            //var upStart = upCombinations.First;
-            //var downStart = downCombinations.First;
-            //var aStart = a.First;
-            //var bStart = b.First;
-            //var cStart = c.First;
-            //var dStart = d.First;
             foreach (var round in _db.Rounds.OrderBy(x => x.RoundNumber))
             {
                 var upLL = new LinkedList<Tuple<Jumper, Jumper>>(upCombinations.Clone());
@@ -155,13 +145,6 @@ namespace Scrambles.Services
                 }
                 AssignJumpersToRounds(round, group, upNode, downNode);
                 startIndex++;
-                //upStart = upStart.NextOrFirst();
-                //downStart = downStart.NextOrFirst();
-                //bStart = bStart.NextOrFirst();//+1
-                //cStart = cStart.NextOrFirst().NextOrFirst();//+2
-                //dStart = dStart.NextOrFirst().NextOrFirst().NextOrFirst();//+3
-                //AssignNumbersToRound(round, group, teamCount, aStart, bStart, cStart, dStart);
-
             }
             _db.SaveChanges();
         }
@@ -198,34 +181,22 @@ namespace Scrambles.Services
             return list.First;
         }
 
-        //private static void AddJumpersToLinkedLists(List<Jumper> jumpers, out LinkedList<Jumper> even, out LinkedList<Jumper> odd)
-        //{
-        //    odd = new LinkedList<Jumper>();
-        //    even = new LinkedList<Jumper>();
-        //    for (var i = 0; i < jumpers.Count; i++)
-        //    {
-        //        var jumper = jumpers[i];
-        //        if (i % 2 == 0)
-        //        {
-        //            even.AddLast(jumper);
-        //        }
-        //        else
-        //        {
-        //            odd.AddLast(jumper);
-        //        }
-        //    }
-        //}
-
-        private static List<Tuple<T, T>> GetCombinationPairs<T>(List<T> list)
+        private static List<Tuple<Jumper, Jumper>> GetCombinationPairs(List<Jumper> list)
         {
             var tuples = list
                 .Select((value, index) => new {value, index})
                 .SelectMany(x =>
                         list.Skip(x.index + 1),
                     (x, y) => Tuple.Create(x.value, y)
-                );
+                )
+                .ToList()
+                .Shuffle();
+                //.OrderByDescending(pair => pair.Item1.NumberOfJumps - pair.Item2.NumberOfJumps);
             //return new LinkedList<Tuple<T, T>>(tuples);
-            return tuples.ToList();
+            var tuplesShuffled = tuples.ToList();
+            tuplesShuffled.ForEach(i => Console.WriteLine($"[{i.Item1.JumperID}, {i.Item2.JumperID}]"));
+
+            return tuplesShuffled;
         }
 
         #endregion

@@ -23,7 +23,7 @@ namespace Data.Sql.Models
         Right = 2
     }
 
-    [DebuggerDisplay("{FirstName} {LastName} ({NumberOfJumps})")]
+    [DebuggerDisplay("{JumperID}: {FirstName} {LastName} ({NumberOfJumps})")]
     public class Jumper : ICloneable
     {
         [Key]
