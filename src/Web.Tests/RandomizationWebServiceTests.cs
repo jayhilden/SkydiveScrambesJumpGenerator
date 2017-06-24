@@ -27,60 +27,55 @@ namespace Web.Tests
             _randomizationWebService = new RandomizationWebService(_dbMock.Object);
         }
 
+        [SetUp]
+        public void RunEveryTest()
+        {
+            _jumperList.Clear();
+            _roundList.Clear();
+            _roundJumperMap.Clear();
+        }
+
         /// <summary>
         /// test the randomization for 8 jumpers, 3 rounds
         /// With this scheme there should NEVER be any duplicates!
         /// </summary>
-        [Test]
-        [Repeat(100)]
-        public void AssignJumpersToRounds()
+        [TestCase(8, 3, 0, Description = "max number of rounds with no duplicates")]
+        [TestCase(8, 4, 1, Description = "1 duplicate expected")]
+        [TestCase(16, 6, 0, Description = "good test case, we usually have 16 people")]
+        public void AssignJumpersToRounds(int numberOfJumpers, int numberOfRounds, int expectedDuplicatePairs)
         {
             //Arrange
             const JumpGroupFlag grp = JumpGroupFlag.Left;
             var maxJumpCount = 1000;
-            var up1 = new Jumper {FirstName = "up1", JumpGroup = grp, RandomizedUpDown = UpDownFlag.UpJumper, NumberOfJumps = maxJumpCount--, JumperID = 100};
-            var up2 = new Jumper {FirstName = "up2", JumpGroup = grp, RandomizedUpDown = UpDownFlag.UpJumper, NumberOfJumps = maxJumpCount--, JumperID = 101 };
-            var up3 = new Jumper { FirstName = "up3", JumpGroup = grp, RandomizedUpDown = UpDownFlag.UpJumper, NumberOfJumps = maxJumpCount--, JumperID = 102 };
-            var up4 = new Jumper { FirstName = "up4", JumpGroup = grp, RandomizedUpDown = UpDownFlag.UpJumper, NumberOfJumps = maxJumpCount--, JumperID = 103 };
+            for (var i = 1; i <= numberOfJumpers / 2; i++)
+            {
+            var up = new Jumper {FirstName = $"up{i}", JumpGroup = grp, RandomizedUpDown = UpDownFlag.UpJumper, NumberOfJumps = maxJumpCount--, JumperID = 99 + i};
+                var down = new Jumper { FirstName = $"down{i}", JumpGroup = grp, RandomizedUpDown = UpDownFlag.DownJumper, NumberOfJumps = maxJumpCount-- / 2, JumperID = 199 + i };
+                _jumperList.Add(up);
+                _jumperList.Add(down);
+            }
 
-            var down1 = new Jumper { FirstName = "down1", JumpGroup = grp, RandomizedUpDown = UpDownFlag.DownJumper, NumberOfJumps = maxJumpCount--, JumperID = 200 };
-            var down2 = new Jumper { FirstName = "down2", JumpGroup = grp, RandomizedUpDown = UpDownFlag.DownJumper, NumberOfJumps = maxJumpCount--, JumperID = 201 };
-            var down3 = new Jumper { FirstName = "down3", JumpGroup = grp, RandomizedUpDown = UpDownFlag.DownJumper, NumberOfJumps = maxJumpCount--, JumperID = 202 };
-            var down4 = new Jumper { FirstName = "down4", JumpGroup = grp, RandomizedUpDown = UpDownFlag.DownJumper, NumberOfJumps = maxJumpCount, JumperID = 203 };
-            
-            _jumperList.AddRange(new List<Jumper> {up1, up2, up3, up4, down1, down2, down3, down4});
-
-            var round1 = new Round {RoundNumber = 1, RoundID = 1};
-            var round2 = new Round { RoundNumber = 2, RoundID =2 };
-            var round3 = new Round { RoundNumber = 3, RoundID = 3 };
-            //var round4 = new Round { RoundNumber = 4, RoundID = 4 };
-           // var round5 = new Round { RoundNumber = 5, RoundID = 5 };
-
-            _roundList.AddRange(new List<Round> {round1, round2, round3});
+            for (var i = 1; i <= numberOfRounds; i++)
+            {
+                _roundList.Add(new Round {RoundNumber = i, RoundID = i});
+            }
+           
 
             //Act
             _randomizationWebService.AssignJumpersToRounds(grp);
 
             //Assert
-            //round 1
             _roundJumperMap.ForEach(Console.WriteLine);
             Assert.IsNotEmpty(_roundJumperMap);
-            AssertNoDuplicates(_roundJumperMap);
-            //var round1Map = _roundJumperMap
-            //    .Where(x => x.RoundID == round1.RoundID)
-            //    .OrderBy(y=> y.RoundID)
-            //    .ThenBy(y=> y.ID)
-            //    .ToList();
-            
-            //Assert.AreEqual(2, round1Map.Count);
-            //AssertRoundMap(round1Map[0], 1, up1, up2, down1, down2);
-            //AssertRoundMap(round1Map[1], 2, up3, up4, down3, down4);
+            AssertNoDuplicates(_roundJumperMap, expectedDuplicatePairs * numberOfRounds);
+
         }
 
-        private void AssertNoDuplicates(List<RoundJumperMap> roundJumperMap)
+        private static void AssertNoDuplicates(List<RoundJumperMap> roundJumperMap, int expectedDuplicatePairs)
         {
             var hashMap4 = new HashSet<List<int>>();
             var hashMap2 = new HashSet<Tuple<int, int>>();
+            int duplicatePairCount = 0;
             foreach (var i in roundJumperMap)
             {
                 var jumpers = new List<int>
@@ -99,20 +94,20 @@ namespace Web.Tests
                 var pair1 = new Tuple<int, int>(i.UpJumper1ID, i.UpJumper2ID);
                 if (hashMap2.Contains(pair1))
                 {
-                    Assert.Fail("Pair1 is duplicated: " + i);
+                    Console.WriteLine("Pair1 is duplicated: " + i);
+                    duplicatePairCount++;
                 }
                 hashMap2.Add(pair1);
 
                 var pair2 = new Tuple<int, int>(i.DownJumper1ID, i.DownJumper2ID);
                 if (hashMap2.Contains(pair2))
                 {
-                    Assert.Fail("Pair2 is duplicated: " + i);
+                    Console.WriteLine("Pair2 is duplicated: " + i);
+                    duplicatePairCount++;
                 }
                 hashMap2.Add(pair2);
-
-
             }
-            Assert.Pass("No duplicates found!");
+            Assert.AreEqual(expectedDuplicatePairs, duplicatePairCount, "Duplicate pairs count is not expected");
         }
 
         private static void AssertRoundMap(RoundJumperMap round, int grpIndex, Jumper up1, Jumper up2, Jumper down1, Jumper down2)

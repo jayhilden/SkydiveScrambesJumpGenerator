@@ -126,19 +126,21 @@ namespace Scrambles.Services
             {
                 return;
             }
-            var up = jumpers.Where(x => x.RandomizedUpDown == UpDownFlag.UpJumper).OrderByDescending(x => x.NumberOfJumps).ToList();
-            var down = jumpers.Where(x => x.RandomizedUpDown == UpDownFlag.DownJumper).OrderByDescending(x => x.NumberOfJumps).ToList();
+            var up = jumpers.Where(x => x.RandomizedUpDown == UpDownFlag.UpJumper)
+                .OrderByDescending(x => x.NumberOfJumps).ToList();
+            var down = jumpers.Where(x => x.RandomizedUpDown == UpDownFlag.DownJumper)
+                .OrderByDescending(x => x.NumberOfJumps).ToList();
 
 
             List<Tuple<Jumper, Jumper>> upCombinations = null;
             List<Tuple<Jumper, Jumper>> downCombinations = null;
             foreach (var round in _db.Rounds.OrderBy(x => x.RoundNumber))
             {
-                if (upCombinations == null)
+                if (upCombinations == null || upCombinations.Count == 0)
                 {
                     //new randomized list
                     upCombinations = GetCombinationPairs(up);
-                     downCombinations = GetCombinationPairs(down);
+                    downCombinations = GetCombinationPairs(down);
                 }
 
                 AssignJumpersToRounds(round, group, upCombinations, downCombinations);
@@ -188,19 +190,6 @@ namespace Scrambles.Services
             }         
         }
 
-        //private static LinkedListNode<Tuple<Jumper, Jumper>> RemoveAlreadyUsedJumpers(LinkedListNode<Tuple<Jumper, Jumper>> upCombinations)
-        //{
-        //    var left = upCombinations.Value.Item1;
-        //    var right = upCombinations.Value.Item2;
-        //    var list = upCombinations.List;
-        //    var itemsToRemove = list.Where(tuple => tuple.Item1 == left || tuple.Item1 == right || tuple.Item2 == left || tuple.Item2 == right).ToList();
-        //    foreach (var toRemove in itemsToRemove)
-        //    {
-        //        list.Remove(toRemove);
-        //    }
-        //    return list.First;
-        //}
-
         private static List<Tuple<Jumper, Jumper>> GetCombinationPairs(List<Jumper> list)
         {
             var tuples = list
@@ -211,8 +200,7 @@ namespace Scrambles.Services
                 )
                 .ToList()
                 .Shuffle();
-                //.OrderByDescending(pair => pair.Item1.NumberOfJumps - pair.Item2.NumberOfJumps);
-            //return new LinkedList<Tuple<T, T>>(tuples);
+
             var tuplesShuffled = tuples.ToList();
             tuplesShuffled.ForEach(i => Console.WriteLine($"[{i.Item1.JumperID}, {i.Item2.JumperID}]"));
 
