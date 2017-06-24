@@ -128,58 +128,78 @@ namespace Scrambles.Services
             }
             var up = jumpers.Where(x => x.RandomizedUpDown == UpDownFlag.UpJumper).OrderByDescending(x => x.NumberOfJumps).ToList();
             var down = jumpers.Where(x => x.RandomizedUpDown == UpDownFlag.DownJumper).OrderByDescending(x => x.NumberOfJumps).ToList();
-            var upCombinations = GetCombinationPairs(up);
-            var downCombinations = GetCombinationPairs(down);
-            var startIndex = 0;
 
+
+            List<Tuple<Jumper, Jumper>> upCombinations = null;
+            List<Tuple<Jumper, Jumper>> downCombinations = null;
             foreach (var round in _db.Rounds.OrderBy(x => x.RoundNumber))
             {
-                var upLL = new LinkedList<Tuple<Jumper, Jumper>>(upCombinations.Clone());
-                var downLL = new LinkedList<Tuple<Jumper, Jumper>>(downCombinations.Clone());
-                var upNode = upLL.First;
-                var downNode = downLL.First;
-                for (var i = 0; i < startIndex; i++)
+                if (upCombinations == null)
                 {
-                    upNode = upNode.Next;
-                    downNode = downNode.Next;
+                    //new randomized list
+                    upCombinations = GetCombinationPairs(up);
+                     downCombinations = GetCombinationPairs(down);
                 }
-                AssignJumpersToRounds(round, group, upNode, downNode);
-                startIndex++;
+
+                AssignJumpersToRounds(round, group, upCombinations, downCombinations);
             }
             _db.SaveChanges();
         }
 
-        private void AssignJumpersToRounds(Round r, JumpGroupFlag leftRight, LinkedListNode<Tuple<Jumper, Jumper>> upNode, LinkedListNode<Tuple<Jumper, Jumper>> downNode)
+        private void AssignJumpersToRounds(
+            Round r, 
+            JumpGroupFlag leftRight, 
+            List<Tuple<Jumper, Jumper>> upAvailableCombinations, 
+            List<Tuple<Jumper, Jumper>> downAvailableCombinations)
         {
-            while (upNode != null)
+            var jumpersUsedThisRound = new HashSet<int>();
+            while (true)
             {
+                var nextUpPair = upAvailableCombinations
+                    .FirstOrDefault(pair =>
+                        !jumpersUsedThisRound.Contains(pair.Item1.JumperID)
+                        && !jumpersUsedThisRound.Contains(pair.Item2.JumperID)
+                    );
+                if (nextUpPair == null)
+                {
+                    break;
+                }
+                var nextDownPair = downAvailableCombinations
+                    .First(pair =>
+                        !jumpersUsedThisRound.Contains(pair.Item1.JumperID)
+                        && !jumpersUsedThisRound.Contains(pair.Item2.JumperID)
+                    );
                 var map = new RoundJumperMap
                 {
                     RoundID = r.RoundID,
-                    UpJumper1ID = upNode.Value.Item1.JumperID,
-                    UpJumper2ID = upNode.Value.Item2.JumperID,
-                    DownJumper1ID = downNode.Value.Item1.JumperID,
-                    DownJumper2ID = downNode.Value.Item2.JumperID,
+                    UpJumper1ID = nextUpPair.Item1.JumperID,
+                    UpJumper2ID = nextUpPair.Item2.JumperID,
+                    DownJumper1ID = nextDownPair.Item1.JumperID,
+                    DownJumper2ID = nextDownPair.Item2.JumperID,
                     JumpGroup = leftRight
                 };
                 _db.RoundJumperMaps.Add(map);
-                upNode = RemoveAlreadyUsedJumpers(upNode);
-                downNode = RemoveAlreadyUsedJumpers(downNode);
-            }            
+                jumpersUsedThisRound.Add(nextUpPair.Item1.JumperID);
+                jumpersUsedThisRound.Add(nextUpPair.Item2.JumperID);
+                jumpersUsedThisRound.Add(nextDownPair.Item1.JumperID);
+                jumpersUsedThisRound.Add(nextDownPair.Item2.JumperID);
+                upAvailableCombinations.Remove(nextUpPair);
+                downAvailableCombinations.Remove(nextDownPair);
+            }         
         }
 
-        private static LinkedListNode<Tuple<Jumper, Jumper>> RemoveAlreadyUsedJumpers(LinkedListNode<Tuple<Jumper, Jumper>> upCombinations)
-        {
-            var left = upCombinations.Value.Item1;
-            var right = upCombinations.Value.Item2;
-            var list = upCombinations.List;
-            var itemsToRemove = list.Where(tuple => tuple.Item1 == left || tuple.Item1 == right || tuple.Item2 == left || tuple.Item2 == right).ToList();
-            foreach (var toRemove in itemsToRemove)
-            {
-                list.Remove(toRemove);
-            }
-            return list.First;
-        }
+        //private static LinkedListNode<Tuple<Jumper, Jumper>> RemoveAlreadyUsedJumpers(LinkedListNode<Tuple<Jumper, Jumper>> upCombinations)
+        //{
+        //    var left = upCombinations.Value.Item1;
+        //    var right = upCombinations.Value.Item2;
+        //    var list = upCombinations.List;
+        //    var itemsToRemove = list.Where(tuple => tuple.Item1 == left || tuple.Item1 == right || tuple.Item2 == left || tuple.Item2 == right).ToList();
+        //    foreach (var toRemove in itemsToRemove)
+        //    {
+        //        list.Remove(toRemove);
+        //    }
+        //    return list.First;
+        //}
 
         private static List<Tuple<Jumper, Jumper>> GetCombinationPairs(List<Jumper> list)
         {

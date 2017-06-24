@@ -32,6 +32,7 @@ namespace Web.Tests
         /// With this scheme there should NEVER be any duplicates!
         /// </summary>
         [Test]
+        [Repeat(100)]
         public void AssignJumpersToRounds()
         {
             //Arrange
