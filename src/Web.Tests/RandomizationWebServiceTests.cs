@@ -41,7 +41,10 @@ namespace Web.Tests
         /// </summary>
         [TestCase(8, 3, 0, Description = "max number of rounds with no duplicates")]
         [TestCase(8, 4, 1, Description = "1 duplicate expected")]
+        [TestCase(8, 6, 3, Description = "common scenario, 3 dups required")]
         [TestCase(16, 6, 0, Description = "good test case, we usually have 16 people")]
+        [TestCase(12, 4, 0, Description = "max rounds with no dups for 12 jumpers")]
+        [TestCase(12, 6, 2, Description = "Common scenario with 12 jumpers")]
         public void AssignJumpersToRounds(int numberOfJumpers, int numberOfRounds, int expectedDuplicatePairs)
         {
             //Arrange
