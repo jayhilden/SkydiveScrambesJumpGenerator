@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Sql", "Data.Sql\Data.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasswordHasher", "PasswordHasher\PasswordHasher.csproj", "{018EACC3-63BB-4DD0-BB8E-4F8C3F321282}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Tests", "Web.Tests\Web.Tests.csproj", "{5707FE57-2E7E-451E-9402-B064FE1F3558}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Tests", "Web.Tests\Web.Tests.csproj", "{E8D3EA54-CD2B-44B3-98F8-6C32D67EB785}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{018EACC3-63BB-4DD0-BB8E-4F8C3F321282}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{018EACC3-63BB-4DD0-BB8E-4F8C3F321282}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{018EACC3-63BB-4DD0-BB8E-4F8C3F321282}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5707FE57-2E7E-451E-9402-B064FE1F3558}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5707FE57-2E7E-451E-9402-B064FE1F3558}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5707FE57-2E7E-451E-9402-B064FE1F3558}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5707FE57-2E7E-451E-9402-B064FE1F3558}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8D3EA54-CD2B-44B3-98F8-6C32D67EB785}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8D3EA54-CD2B-44B3-98F8-6C32D67EB785}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8D3EA54-CD2B-44B3-98F8-6C32D67EB785}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8D3EA54-CD2B-44B3-98F8-6C32D67EB785}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
