@@ -23,7 +23,6 @@ namespace Data.Sql.Models
         Right = 2
     }
 
-    [DebuggerDisplay("{JumperID}: {FirstName} {LastName} ({NumberOfJumps})")]
     public class Jumper : ICloneable
     {
         [Key]
@@ -57,6 +56,11 @@ namespace Data.Sql.Models
         public object Clone()
         {
             return AutoMapper.Mapper.Map<Jumper>(this);
+        }
+
+        public override string ToString()
+        {
+            return $"{JumperID}: {FirstName} {LastName} ({NumberOfJumps})";
         }
     }
 }

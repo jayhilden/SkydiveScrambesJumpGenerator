@@ -42,7 +42,7 @@ namespace Data.Sql.Models
         public override string ToString()
         {
             return
-                $"ID {ID}, RoundID {RoundID}, UP1 {UpJumper1ID}, UP2 {UpJumper2ID}, DOWN1 {DownJumper1ID}, DOWN2 {DownJumper2ID}";
+                $"RoundID {RoundID}, UP1 {UpJumper1ID}, UP2 {UpJumper2ID}, DOWN1 {DownJumper1ID}, DOWN2 {DownJumper2ID}";
         }
     }
 }

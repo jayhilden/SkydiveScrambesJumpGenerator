@@ -42,10 +42,10 @@ namespace Web.Tests
         [TestCase(8, 3, 0, Description = "max number of rounds with no duplicates")]
         [TestCase(8, 4, 1, Description = "1 duplicate expected")]
         [TestCase(8, 6, 3, Description = "common scenario, 3 dups required")]
-        [TestCase(16, 6, 0, Description = "good test case, we usually have 16 people")]
+        [TestCase(16, 7, 0, Description = "with 16 people, there are 7 total rounds without re-randomizing")]
         [TestCase(12, 4, 0, Description = "max rounds with no dups for 12 jumpers")]
         [TestCase(12, 6, 2, Description = "Common scenario with 12 jumpers")]
-        public void AssignJumpersToRounds(int numberOfJumpers, int numberOfRounds, int expectedDuplicatePairs)
+        public void AssignJumpersToRounds(int numberOfJumpers, int numberOfRounds, int expectedRoundsWithDups)
         {
             //Arrange
             const JumpGroupFlag grp = JumpGroupFlag.Left;
@@ -68,17 +68,40 @@ namespace Web.Tests
             _randomizationWebService.AssignJumpersToRounds(grp);
 
             //Assert
-            _roundJumperMap.ForEach(Console.WriteLine);
             Assert.IsNotEmpty(_roundJumperMap);
-            AssertNoDuplicates(_roundJumperMap, expectedDuplicatePairs * numberOfRounds);
+            AssertEveryJumperEveryRound(_roundJumperMap, _jumperList, _roundList);
+            AssertNoDuplicates(_roundJumperMap, expectedRoundsWithDups);
 
+        }
+
+        /// <summary>
+        /// assert that every jumper is used exactly once in every once
+        /// </summary>
+        /// <param name="roundJumperMap"></param>
+        /// <param name="jumperList"></param>
+        /// <param name="roundList"></param>
+        private static void AssertEveryJumperEveryRound(List<RoundJumperMap> roundJumperMap, List<Jumper> jumperList, List<Round> roundList)
+        {
+            foreach (var r in roundList)
+            {
+                foreach (var j in jumperList)
+                {
+                    var cnt = roundJumperMap.Count(x =>
+                        x.RoundID == r.RoundID
+                        && (x.UpJumper1ID == j.JumperID
+                            || x.UpJumper2ID == j.JumperID
+                            || x.DownJumper1ID == j.JumperID
+                            || x.DownJumper2ID == j.JumperID));
+                    Assert.AreEqual(1, cnt, $"Count is incorrect for round {r.RoundNumber}, jumper {j}");
+                }
+            }
         }
 
         private static void AssertNoDuplicates(List<RoundJumperMap> roundJumperMap, int expectedDuplicatePairs)
         {
             var hashMap4 = new HashSet<List<int>>();
             var hashMap2 = new HashSet<Tuple<int, int>>();
-            int duplicatePairCount = 0;
+            var duplicateRounds = new HashSet<int>();
             foreach (var i in roundJumperMap)
             {
                 var jumpers = new List<int>
@@ -90,7 +113,7 @@ namespace Web.Tests
                 };
                 if (hashMap4.Contains(jumpers))
                 {
-                    Assert.Fail($"jumpers are duplicated!  {i}");
+                    Assert.Fail($"all 4 jumpers are duplicated, that is never acceptable!  {i}");
                 }
                 hashMap4.Add(jumpers);
 
@@ -98,7 +121,7 @@ namespace Web.Tests
                 if (hashMap2.Contains(pair1))
                 {
                     Console.WriteLine("Pair1 is duplicated: " + i);
-                    duplicatePairCount++;
+                    duplicateRounds.Add(i.RoundID);
                 }
                 hashMap2.Add(pair1);
 
@@ -106,19 +129,11 @@ namespace Web.Tests
                 if (hashMap2.Contains(pair2))
                 {
                     Console.WriteLine("Pair2 is duplicated: " + i);
-                    duplicatePairCount++;
+                    duplicateRounds.Add(i.RoundID);
                 }
                 hashMap2.Add(pair2);
             }
-            Assert.AreEqual(expectedDuplicatePairs, duplicatePairCount, "Duplicate pairs count is not expected");
-        }
-
-        private static void AssertRoundMap(RoundJumperMap round, int grpIndex, Jumper up1, Jumper up2, Jumper down1, Jumper down2)
-        {
-            Assert.AreEqual(up1.JumperID, round.UpJumper1ID, $"round {round.ID}, grp {grpIndex}, UP 1 expected {up1.FirstName}");
-            Assert.AreEqual(up2.JumperID, round.UpJumper2ID, $"round {round.ID}, grp {grpIndex}, UP 2 expected {up1.FirstName}");
-            Assert.AreEqual(down1.JumperID, round.DownJumper1ID, $"round {round.ID}, grp {grpIndex}, down 1 expected {up1.FirstName}");
-            Assert.AreEqual(down2.JumperID, round.DownJumper2ID, $"round {round.ID}, grp {grpIndex}, down 2 expected {up1.FirstName}");
+            Assert.AreEqual(expectedDuplicatePairs, duplicateRounds.Count, "Duplicate pairs count is not expected");
         }
     }
 }
