@@ -20,6 +20,7 @@ namespace Web.Tests
             dbSet.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(queryable.ElementType);
             dbSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(() => queryable.GetEnumerator());
             dbSet.Setup(d => d.Add(It.IsAny<T>())).Callback<T>(sourceList.Add);
+            dbSet.Setup(d => d.AddRange(It.IsAny<IEnumerable<T>>())).Callback<IEnumerable<T>>(sourceList.AddRange);
 
 
             return dbSet.Object;

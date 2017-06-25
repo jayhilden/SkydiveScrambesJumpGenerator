@@ -154,33 +154,78 @@ namespace Scrambles.Services
             List<Tuple<Jumper, Jumper>> downCombinations = null;
             foreach (var round in _db.Rounds.OrderBy(x => x.RoundNumber))
             {
-                if (upCombinations == null || upCombinations.Count == 0)
-                {
-                    //new randomized list
-                    upCombinations = GetCombinationPairs(up);
-                    downCombinations = GetCombinationPairs(down);
-                }
 
-                AssignJumpersToRounds(round, group, teamCount, upCombinations, downCombinations);
+
+                var retryCount = 0;
+                while (true)
+                {
+                    if (upCombinations == null || upCombinations.Count == 0)
+                    {
+                        //new randomized list
+                        upCombinations = GetCombinationPairs(up);
+                        downCombinations = GetCombinationPairs(down);
+                    }
+                    var roundMap = AssignJumpersToRounds(round, group, teamCount, ref upCombinations,
+                        ref downCombinations);
+                    if (roundMap != null)
+                    {
+                        _db.RoundJumperMaps.AddRange(roundMap);
+                        break;
+                    }
+                    Console.WriteLine($"{nameof(AssignJumpersToRounds)} failed, retry count = {retryCount}");
+                    if (++retryCount > 10)
+                    {
+                        Console.WriteLine("ERROR: failed 10 times, recreating");
+                        upCombinations = null;
+                        downCombinations = null;
+                    }
+                    else
+                    {
+                        //re-randomize the available combinations
+                        upCombinations = upCombinations.Shuffle().ToList();
+                        downCombinations = downCombinations.Shuffle().ToList();
+                    }
+                }
             }
             _db.SaveChanges();
         }
 
-        private void AssignJumpersToRounds(Round r, JumpGroupFlag leftRight, int teamCount, List<Tuple<Jumper, Jumper>> upAvailableCombinations, List<Tuple<Jumper, Jumper>> downAvailableCombinations)
+        private List<RoundJumperMap> AssignJumpersToRounds(
+            Round r, 
+            JumpGroupFlag leftRight, 
+            int teamCount, 
+            ref List<Tuple<Jumper, Jumper>> upAvailableCombinationsOriginal, 
+            ref List<Tuple<Jumper, Jumper>> downAvailableCombinationsOriginal)
         {
+            var roundMap = new List<RoundJumperMap>();
             var jumpersUsedThisRound = new HashSet<int>();
-            for(var i = 1; i <= teamCount; i ++)
+            //create clones because we may need to rollback
+            var upAvailableCombinations = upAvailableCombinationsOriginal.Clone();
+            var downAvailableCombinations = downAvailableCombinationsOriginal.Clone();
+            for (var i = 1; i <= teamCount; i++)
             {
                 var nextUpPair = upAvailableCombinations
-                    .First(pair =>
+                    .FirstOrDefault(pair =>
                         !jumpersUsedThisRound.Contains(pair.Item1.JumperID)
                         && !jumpersUsedThisRound.Contains(pair.Item2.JumperID)
                     );
                 var nextDownPair = downAvailableCombinations
-                    .First(pair =>
+                    .FirstOrDefault(pair =>
                         !jumpersUsedThisRound.Contains(pair.Item1.JumperID)
                         && !jumpersUsedThisRound.Contains(pair.Item2.JumperID)
                     );
+                if (nextUpPair == null)
+                {
+                    Console.WriteLine("failed to find up pair");
+                }
+                if (nextDownPair == null)
+                {
+                    Console.WriteLine("failed to find down pair");
+                }
+                if (nextUpPair == null || nextDownPair == null)
+                {
+                    return null;
+                }
                 var map = new RoundJumperMap
                 {
                     RoundID = r.RoundID,
@@ -191,14 +236,17 @@ namespace Scrambles.Services
                     JumpGroup = leftRight
                 };
                 Console.WriteLine(map);
-                _db.RoundJumperMaps.Add(map);
+                roundMap.Add(map);
                 jumpersUsedThisRound.Add(nextUpPair.Item1.JumperID);
                 jumpersUsedThisRound.Add(nextUpPair.Item2.JumperID);
                 jumpersUsedThisRound.Add(nextDownPair.Item1.JumperID);
                 jumpersUsedThisRound.Add(nextDownPair.Item2.JumperID);
                 upAvailableCombinations.Remove(nextUpPair);
                 downAvailableCombinations.Remove(nextDownPair);
-            }         
+            }
+            upAvailableCombinationsOriginal = upAvailableCombinations;
+            downAvailableCombinationsOriginal = downAvailableCombinations;
+            return roundMap;
         }
 
         private static List<Tuple<Jumper, Jumper>> GetCombinationPairs(List<Jumper> list)
