@@ -137,7 +137,7 @@ namespace Web.Tests
             }
             if (duplicateRounds.Count > maxRoundsWithDuplicates)
             {
-                Assert.Fail($"Duplicate pairs count is greater than expected. duplicate rounds: {duplicateRounds}, max allowed: {maxRoundsWithDuplicates}");
+                Assert.Fail($"Duplicate pairs count is greater than expected. duplicate rounds: {duplicateRounds.Count}, max allowed: {maxRoundsWithDuplicates}");
             }
         }
     }
