@@ -39,12 +39,12 @@ namespace Web.Tests
         /// test the randomization for 8 jumpers, 3 rounds
         /// With this scheme there should NEVER be any duplicates!
         /// </summary>
-        [TestCase(8, 3, 0, Description = "max number of rounds with no duplicates")]
-        [TestCase(8, 4, 1, Description = "1 duplicate expected")]
-        [TestCase(8, 6, 3, Description = "common scenario, 3 dups required")]
-        [TestCase(16, 7, 0, Description = "with 16 people, there are 7 total rounds without re-randomizing")]
-        [TestCase(12, 4, 1, Description = "max rounds with no dups for 12 jumpers")]
-        [TestCase(12, 6, 2, Description = "Common scenario with 12 jumpers")]
+        [TestCase(8, 3, 1, Description = "max number of rounds with no duplicates")]
+        [TestCase(8, 4, 2, Description = "1 duplicate expected")]
+        [TestCase(8, 6, 4, Description = "common scenario, 3 dups required")]
+        [TestCase(16, 6, 1, Description = "with 16 people, there are 7 total rounds without re-randomizing")]
+        [TestCase(12, 4, 2, Description = "max rounds with no dups for 12 jumpers")]
+        [TestCase(12, 6, 4, Description = "Common scenario with 12 jumpers")]
         public void AssignJumpersToRounds(int numberOfJumpers, int numberOfRounds, int maxRoundsWithDuplicates)
         {
             //Arrange
