@@ -118,24 +118,6 @@ namespace Scrambles.Services
             _db.SaveChanges();
         }
 
-        //internal void AssignJumpersToRoundsWithRetry(JumpGroupFlag group)
-        //{
-        //    for (var i = 0; i < 10; i++)
-        //    {
-        //        try
-        //        {
-        //            AssignJumpersToRounds(group);
-        //            return;
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            Console.WriteLine(e);
-        //        }
-        //    }
-        //    throw new Exception($"{nameof(AssignJumpersToRounds)} failed 10 times");
-        //}
-
-
         internal void AssignJumpersToRounds(JumpGroupFlag group)
         {
             var jumpers = _db.Jumpers.Where(x => x.JumpGroup == group);
