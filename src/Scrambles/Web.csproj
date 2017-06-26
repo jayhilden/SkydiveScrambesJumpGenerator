@@ -217,7 +217,9 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Configurations\ConnectionStrings.config" />
     <Content Include="Configurations\ConnectionStrings.Release.config" />
+    <None Include="Properties\PublishProfiles\AWS Beta.pubxml" />
     <None Include="Properties\PublishProfiles\AWS piia.pubxml" />
+    <None Include="Properties\PublishProfiles\AWS Prod.pubxml" />
     <None Include="Properties\PublishProfiles\AWS.pubxml" />
     <None Include="Properties\PublishProfiles\localhost.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

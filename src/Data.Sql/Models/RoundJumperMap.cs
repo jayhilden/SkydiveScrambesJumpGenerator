@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 
 namespace Data.Sql.Models
 {
@@ -37,5 +38,11 @@ namespace Data.Sql.Models
         public virtual Jumper UpJumper2 { get; set; }
         public virtual Jumper DownJumper1 { get; set; }
         public virtual Jumper DownJumper2 { get; set; }
+
+        public override string ToString()
+        {
+            return
+                $"RoundID {RoundID}, UP1 {UpJumper1ID}, UP2 {UpJumper2ID}, DOWN1 {DownJumper1ID}, DOWN2 {DownJumper2ID}";
+        }
     }
 }
